@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+    <meta name="description" content="Страница не найдена / Веб-студия Слон" />
+    <meta name="keywords" content="Страница не найдена / Веб-студия Слон">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://web-slon.ru/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://web-slon.ru/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://web-slon.ru/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://web-slon.ru/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://web-slon.ru/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://web-slon.ru/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://web-slon.ru/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://web-slon.ru/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://web-slon.ru/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://web-slon.ru/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://web-slon.ru/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://web-slon.ru/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://web-slon.ru/favicon/favicon-16x16.png">
+    <link rel="manifest" href="https://web-slon.ru/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap&subset=cyrillic" rel="stylesheet"> 
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.formstyler.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Страница не найдена / Веб-студия Слон</title>
+    
+    <script>
+	    var timeout = 10;
+	    
+	    function declOfNum(number, titles)  
+		{  
+		    cases = [2, 0, 1, 1, 1, 2];  
+		    return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
+		}
+
+	    checkTimeout = function() {
+		    if (timeout <= 0) {
+			    location.href = 'https://web-slon.ru';
+		    } else {
+				setTimeout(function(){
+					timeout -= 1;
+					document.getElementById('timeout').innerHTML = '' + timeout + ' ' + declOfNum(timeout, ['секунду', 'секунды', 'секунд']);
+					checkTimeout();				    
+				}, 1000);  	    
+		    }	    
+	    }
+	    checkTimeout();
+	</script>
+</head>
+<body class="contact_body">
+
+    <section class="not_found">
+        <img src="img/no_page.svg" alt="">
+        <p>
+            К сожалению, такая страница не найдена. <br>
+            Попробуйте ввести другой адрес или перейти на наш сайт.
+        </p>
+        <a class="logo-container" href="https://web-slon.ru/"><img src="img/slon_logo.svg" alt=""></a>
+        <p>
+            Вы будете автоматически перенаправлены через <span id='timeout'>10 секунд</span><br>
+            или нажмите на <a href="https://web-slon.ru/">эту ссылку</a>.
+        </p>
+    </section>
+
+</body>
+</html>
+

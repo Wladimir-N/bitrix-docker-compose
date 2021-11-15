@@ -1,0 +1,22 @@
+version: '3'
+services:
+  # The error pages server
+  error-pages:
+    image: nginx:latest
+    container_name: error-pages
+    volumes:
+      - ./error-pages/www:/usr/share/nginx/error-pages
+      - ./error-pages/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    labels:
+      traefik.enable: true
+
+      traefik.http.routers.error-router.rule: HostRegexp(`{host:.+}`)
+      traefik.http.routers.error-router.priority: 1
+      traefik.http.routers.error-router.entrypoints: http
+      traefik.http.routers.error-router.middlewares: error-pages-middleware
+
+      traefik.http.middlewares.error-pages-middleware.errors.status: 400-599
+      traefik.http.middlewares.error-pages-middleware.errors.service: error-pages-service
+      traefik.http.middlewares.error-pages-middleware.errors.query: /{status}.html
+
+      traefik.http.services.error-pages-service.loadbalancer.server.port: 80

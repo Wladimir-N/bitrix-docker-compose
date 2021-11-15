@@ -1,0 +1,130 @@
+input::-ms-clear {
+ display: none;
+}
+/*modal по вертикали*/
+.modal {
+  text-align: center;
+}
+@media screen and (min-width: 992px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+/*a*/
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+a:focus, a:visited, a:link, a:hover, button:focus, button:visited, button:link, button:hover {
+  outline: none;
+}
+input:focus, input:visited, input:hover, input:link {
+  outline: none;
+}
+textarea:focus, textarea:visited, textarea:hover, textarea:link {
+  outline: none;
+}
+button, label {
+  cursor: pointer;
+}
+/*container*/
+@media (min-width: 1200px) { 
+  .container {
+    max-width: 1200px;
+  }
+}
+@media (min-width: 1439px) { 
+  .container {
+    max-width: 1350px;
+  }
+}
+@media (min-width: 1500px) { 
+  .container {
+    max-width: 1430px;
+  }
+}
+/*btn_1*/
+.btn_1 {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+  background: url('../img/btn_1_bg.png') no-repeat left center / 200% 100%;
+  border-radius: 10px 0 14px 0;
+}
+.btn_1 span{
+  display: inline-block;
+  color: #fefefe;
+  font-family: Montserrat;
+  font-size: 17px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.btn_1 svg {
+  margin-right: 25px;
+}
+.btn_1 svg .btn_1_svg {
+  fill:#fdfdfd;
+}
+.btn_1:hover {
+  background-position: 100% center !important;
+}
+.btn_1:hover svg .btn_1_svg {
+  fill:#fcebb0;
+}
+.btn_1:hover span {
+  color: #fcebb0;
+}
+/*zag*/
+.zag {
+  text-align: center;
+  margin-bottom: 65px;
+}
+.zag h1 {
+  color: #1e1a16;
+  font-family: Montserrat;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 15px;
+}
+.zag h1:last-child {
+  margin-bottom: 0;
+}
+.zag div {
+  width: 25px;
+  height: 2px;
+  background: #e77811;
+  margin: 0 auto 15px;
+}
+.zag div:last-child {
+  margin-bottom: 0;
+}
+.zag p {
+  color: #1e1a16;
+  font-family: Montserrat;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+}
+/*placeholder*/
+::-webkit-input-placeholder {}
+::-moz-placeholder      {}
+:-moz-placeholder       {}
+:-ms-input-placeholder    {}
