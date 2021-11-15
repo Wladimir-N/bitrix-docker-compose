@@ -1,0 +1,14 @@
+/docker/traefik/acme.json
+/docker/xhprof/xhprof
+/services/*
+!/services/.gitkeep
+/images/*
+!/images/.gitkeep
+/logs
+/.env
+/psql
+/redis
+.idea/
+/files
+!/files/.gitkeep
+!/files/public/users/default/avatar/files/origin.png

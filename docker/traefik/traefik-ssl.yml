@@ -1,0 +1,44 @@
+api:
+  dashboard: true
+
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+#  rabbitmq_web:
+#    address: ":15672"
+#  rabbitmq_amqp:
+#    address: ":5672"
+#  grafana:
+#    address: ":3000"
+
+http:
+  routers:
+    http-catchall:
+      rule: hostregexp(`{host:.+}`)
+      entrypoints:
+        - http
+      middlewares:
+        - redirect-to-https
+#  middlewares:
+#    add-api-prefix:
+#      addPrefix:
+#        prefix: "/api"
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+        permanent: false
+
+certificatesResolvers:
+  letsEncrypt:
+    acme:
+      email: dev@web-slon.ru
+      storage: acme.json
+      httpChallenge:
+        entryPoint: http
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
