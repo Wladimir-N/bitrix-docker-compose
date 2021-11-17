@@ -1,4 +1,4 @@
-/docker/traefik/acme.json
+/conf/traefik/acme.json
 /docker/xhprof/xhprof
 /services/*
 !/services/.gitkeep

@@ -14,18 +14,16 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./../docker/traefik/acme.json:/acme.json
+      - ./../conf/traefik/acme.json:/acme.json
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./../docker/traefik/traefik-no-ssl.yml:/traefik.yml:ro
+      - ./../conf/traefik/traefik-no-ssl.yml:/traefik.yml:ro
     labels:
       traefik.enable: true
       traefik.http.routers.traefik.rule: Host(`traefik.${MAIN_HOST}`)
-
       traefik.http.routers.traefik.entrypoints: http
 #      traefik.http.routers.traefik.entrypoints: https
 #      traefik.http.routers.traefik.tls: true
 #      traefik.http.routers.traefik.tls.certresolver: letsEncrypt
-
       traefik.http.routers.traefik.service: api@internal
       traefik.http.services.traefik.loadbalancer.server.port: 80
 
