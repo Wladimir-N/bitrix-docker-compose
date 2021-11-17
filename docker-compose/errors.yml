@@ -5,8 +5,8 @@ services:
     image: nginx:latest
     container_name: error-pages
     volumes:
-      - ./error-pages/www:/usr/share/nginx/error-pages
-      - ./error-pages/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./../error-pages/www:/usr/share/nginx/error-pages
+      - ./../error-pages/nginx/default.conf:/etc/nginx/conf.d/default.conf
     labels:
       traefik.enable: true
 
