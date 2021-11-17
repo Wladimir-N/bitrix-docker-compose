@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  stub-nginx:
+    image: registry.gitlab.com/bitrix-k8s/images/nginx:latest
+    restart: on-failure
+    container_name: stub-nginx
+    links:
+      - stub-php-fpm:php
+    depends_on:
+      - stub-php-fpm
+    labels:
+      traefik.enable: true
+      traefik.http.routers.stub-nginx.rule: Host(`${MAIN_HOST}`)
+      traefik.http.routers.stub-nginx.entrypoints: http
+      traefik.http.services.stub-nginx.loadbalancer.server.port: 80
+    volumes:
+      - ./../logs/nginx:/var/log/nginx
+      - ./stub/www:/var/www
+
+  stub-php-fpm:
+    image: registry.gitlab.com/bitrix-k8s/images/php-fpm:latest
+    container_name: stub-php-fpm
+    restart: on-failure
+    #    ports:
+    #      - "9000:9000"
+    volumes:
+      - ./stub/www:/var/www
+      - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
+    depends_on:
+      - db
+    links:
+      - db
