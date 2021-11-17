@@ -13,3 +13,5 @@
 !/files/.gitkeep
 !/files/public/users/default/avatar/files/origin.png
 /docker-compose/stub/
+/sites/*
+!/sites/.gitkeep
