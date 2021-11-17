@@ -1,0 +1,3 @@
+[submodule "images/php-fpm"]
+	path = images/php-fpm
+	url = git@gitlab.com:bitrix-k8s/images/php-fpm.git

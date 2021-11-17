@@ -2,8 +2,6 @@
 /docker/xhprof/xhprof
 /services/*
 !/services/.gitkeep
-/images/*
-!/images/.gitkeep
 /logs
 /.env
 /psql
