@@ -11,15 +11,3 @@ services:
       - ./../data/mysql:/var/lib/mysql:cached
     labels:
       traefik.enable: false
-
-  mysql-adminer:
-    image: adminer
-    container_name: mysql-adminer
-    restart: always
-    depends_on:
-      - db
-    labels:
-      traefik.enable: true
-      traefik.http.routers.mysql-adminer.rule: Host(`adminer.${MAIN_HOST}`)
-      traefik.http.routers.mysql-adminer.entrypoints: http
-      traefik.http.services.mysql-adminer.loadbalancer.server.port: 8080
