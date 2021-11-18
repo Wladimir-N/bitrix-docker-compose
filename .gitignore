@@ -9,7 +9,7 @@
 !/sites/.gitkeep
 
 # файлы баз данных
-/data/mysql
+/data/mysql/*
 !/data/mysql/.gitkeep
 
 # файл traefik-а для ssl-сертификатов
