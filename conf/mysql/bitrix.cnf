@@ -1,3 +1,4 @@
 [mysqld]
 innodb_strict_mode=OFF
 sql_mode=""
+max_allowed_packet=128M
