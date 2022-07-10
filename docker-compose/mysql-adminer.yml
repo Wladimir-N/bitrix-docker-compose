@@ -2,7 +2,7 @@ version: '3'
 services:
   mysql-adminer:
     image: adminer
-    container_name: mysql-adminer
+    container_name: webslon-bitrix-mysql-adminer
     restart: always
     depends_on:
       - db

@@ -17,7 +17,7 @@ services:
     volumes:
       - ./../conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./../logs/nginx:/var/log/nginx
-      - ./../sites/stub/www:/var/www:cached
+      - ./../sites/stub:/var/www:cached
 
   stub-php-fpm:
     image: registry.gitlab.com/bitrix-k8s/images/php-fpm:latest
@@ -25,10 +25,16 @@ services:
     restart: on-failure
     #    ports:
     #      - "9000:9000"
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
+      XDEBUG_SESSION: "docker-server"
     volumes:
       - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
-      - ./../sites/stub/www:/var/www:cached
+      - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+      - ./../sites/stub:/var/www:cached
     depends_on:
       - db
     links:
       - db
+    extra_hosts:
+      - Host(`example.local`):127.0.0.1

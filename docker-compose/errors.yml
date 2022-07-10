@@ -3,7 +3,8 @@ services:
   # The error pages server
   error-pages:
     image: nginx:latest
-    container_name: error-pages
+    container_name: webslon-bitrix-error-pages
+    restart: on-failure
     volumes:
       - ./../error-pages/www:/usr/share/nginx/error-pages
       - ./../error-pages/nginx/default.conf:/etc/nginx/conf.d/default.conf
