@@ -4,10 +4,10 @@ services:
     image: traefik:latest
     container_name: webslon-bitrix-traefik
     restart: unless-stopped
-#    logging:
-#      driver: loki
-#      options:
-#        loki-url: "http://0.0.0.0:3100/loki/api/v1/push"
+    #    logging:
+    #      driver: loki
+    #      options:
+    #        loki-url: "http://0.0.0.0:3100/loki/api/v1/push"
     security_opt:
       - no-new-privileges:true
     ports:
@@ -21,16 +21,16 @@ services:
       traefik.enable: true
       traefik.http.routers.traefik.rule: Host(`traefik.${MAIN_HOST}`)
       traefik.http.routers.traefik.entrypoints: http
-#      traefik.http.routers.traefik.entrypoints: https
-#      traefik.http.routers.traefik.tls: true
-#      traefik.http.routers.traefik.tls.certresolver: letsEncrypt
+      #      traefik.http.routers.traefik.entrypoints: https
+      #      traefik.http.routers.traefik.tls: true
+      #      traefik.http.routers.traefik.tls.certresolver: letsEncrypt
       traefik.http.routers.traefik.service: api@internal
       traefik.http.services.traefik.loadbalancer.server.port: 80
 
-#      traefik.http.routers.http-catchall.rule: hostregexp(`{host:.+}`)
-#      traefik.http.routers.http-catchall.entrypoints: http
-#      traefik.http.routers.http-catchall.middlewares: redirect-to-https@docker
-#      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
+      #      traefik.http.routers.http-catchall.rule: hostregexp(`{host:.+}`)
+      #      traefik.http.routers.http-catchall.entrypoints: http
+      #      traefik.http.routers.http-catchall.middlewares: redirect-to-https@docker
+      #      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
 
       # basic auth
       traefik.http.middlewares.test-auth.basicauth.users: ${TRAEFIK_CREDENTIALS}

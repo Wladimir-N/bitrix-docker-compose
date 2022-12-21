@@ -16,7 +16,7 @@ services:
       traefik.http.services.stub-nginx.loadbalancer.server.port: 80
     volumes:
       - ./../conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./../logs/nginx:/var/log/nginx
+      - ./../logs/stub/nginx:/var/log/nginx
       - ./../sites/stub:/var/www:cached
 
   stub-php-fpm:
