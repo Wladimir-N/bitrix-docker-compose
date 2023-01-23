@@ -1,2 +1,4 @@
 [submodule "images/php-fpm-7.4"]
 	path = images/php-fpm-7.4
+[submodule "images/php-fpm-8.1"]
+	path = images/php-fpm-8.1
