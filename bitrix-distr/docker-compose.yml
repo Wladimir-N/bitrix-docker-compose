@@ -20,7 +20,7 @@ services:
       - ./../sites/stub:/var/www:cached
 
   stub-php-fpm:
-    image: registry.gitlab.com/bitrix-k8s/images/php-fpm:latest
+    image: registry.gitlab.com/bitrix-k8s/images/php-fpm-8.1:latest
     container_name: stub-php-fpm
     restart: on-failure
     #    ports:
