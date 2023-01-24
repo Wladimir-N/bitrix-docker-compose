@@ -37,4 +37,4 @@ services:
     links:
       - db
     extra_hosts:
-      - Host(`example.local`):127.0.0.1
+      - Host(`${MAIN_HOST}`):127.0.0.1
