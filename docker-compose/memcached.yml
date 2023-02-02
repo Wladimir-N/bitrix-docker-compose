@@ -1,0 +1,13 @@
+version: '3'
+services:
+  memcached:
+    image: memcached:alpine
+    container_name: bitrix-memcached
+    restart: always
+    environment:
+      - MEMCACHED_MAXCONN=1024
+      - MEMCACHED_CACHESIZE=1024
+      # - MEMCACHED_MAXMEM=64
+      - MEMCACHED_THREADS=8
+    labels:
+      traefik.enable: false

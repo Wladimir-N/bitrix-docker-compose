@@ -46,6 +46,44 @@ stub-php-fpm:
 
 Также можно собрать и использовать свой образ, например, если нужно добавить какие-то нестандартные компоненты, например, redis.
 
+## Memcached
+
+Для настройки Memcached необходимо для каждого сайта выполнить следующие шаги:
+
+1. В файле **/bitrix/php_interface/dbconn.php** добавить объявление констант:
+```php
+define("BX_CACHE_TYPE", "memcache");
+define("BX_CACHE_SID", $_SERVER["DOCUMENT_ROOT"]."#01");
+define("BX_MEMCACHE_HOST", "memcached");
+define("BX_MEMCACHE_PORT", "11211");
+```
+2. В файле **/bitrix/.settings_extra.php** (если его нет, то создать):
+```php
+<?php
+# /bitrix/.settings_extra.php
+return array(
+  'cache' => array(
+    'value' => array(
+      'type' => 'memcache',
+      'memcache' => array(
+        'host' => 'memcached',
+        'port' => '11211',
+      ),
+      'sid' => $_SERVER["DOCUMENT_ROOT"]."#01"
+    ),
+  ),
+);
+?>
+```
+
+> Если используется многосайтовость, то нужно указывать статичный sid, без `$_SERVER["DOCUMENT_ROOT"]`. Иначе для двух сайтов кеш будет отличаться, так-как папки сайтов разные.
+
+> Расширения memcached и memcache для php - это разные вещи. Устанавливать надо именно memcache.
+
+Документация Битрикс:
+1. https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&LESSON_ID=9421
+2. https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=43&LESSON_ID=2795#cache
+
 ## Как развенуть существующий сайт из бекапа Битрикс
 
 1. Скачать бекап в корень папки www сайта
