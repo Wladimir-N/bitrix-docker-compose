@@ -127,7 +127,7 @@ docker-compose pull \
 && docker-compose up --force-recreate --remove-orphans --build -d \
 && docker image prune -f
 ```
-m
+
 ## Решение проблем
 
 ### Не запускается MySQL
