@@ -1,4 +1,9 @@
-# Bitrix in docker
+# Bitrix in Docker
+
+## Сообщество
+
+1. Если есть какие-то вопросы: вступайте в группу телеграм: https://t.me/bitrixdevops.
+2. Если Вы нашли ошибку, у Вас есть замечания или предложения по функционалу, пишите тикет сюда: https://gitlab.com/groups/bitrix-docker/-/issues.
 
 ## Начало работы
 
@@ -9,7 +14,7 @@
    docker-compose up -d
    ```
 
-## Добавление новой площадки (docker-compose)
+## Добавление нового сайта
 
 1. Скопировать папку [bitrix-distr/](bitrix-distr/) в папку [sites/](sites/).
 2. Переименовать новую папку в соответствии с продуктивным адресом проекта, например: `test.example.com`. 
@@ -27,6 +32,20 @@
    docker-compose up -d
    ```
 
+## Версия php
+
+Для смены версии php необходимо изменить образ контейнера php-fpm в файле **docker-compose.yml**.
+```yaml
+stub-php-fpm:
+    image: registry.gitlab.com/bitrix-k8s/images/php-fpm-8.1:latest
+```
+
+Доступные на текущий момент образы:
+- registry.gitlab.com/bitrix-k8s/images/php-fpm-7.4:latest
+- registry.gitlab.com/bitrix-k8s/images/php-fpm-8.1:latest
+
+Также можно собрать и использовать свой образ, например, если нужно добавить какие-то нестандартные компоненты, например, redis.
+
 ## Как развенуть существующий сайт из бекапа Битрикс
 
 1. Скачать бекап в корень папки www сайта
@@ -41,20 +60,6 @@
    3. Пароль: **test** (указывается в файле [.env](.env) в переменной MYSQL_ROOT_PASSWORD)
    4. Имя базы данных - придумать в зависимости от проекта, лучше не включать спецсимволы и знаки пунктуации, например: `examplecom`
 
-## Версия php
-
-Для смены версии php необходимо изменить образ контейнера php-fpm в файле **docker-compose.yml**.
-```yaml
-stub-php-fpm:
-    image: registry.gitlab.com/bitrix-k8s/images/php-fpm-8.1:latest
-```
-
-Доступные образы:
-- registry.gitlab.com/bitrix-k8s/images/php-fpm-7.4:latest
-- registry.gitlab.com/bitrix-k8s/images/php-fpm-8.1:latest
-
-Также можно собрать и использовать свой образ, например, если нужно добавить какие-то нестандартные компоненты, например, redis.
-
 ## Многосайтовая конфигурация
 
 1. Настраиваем сайт аналогично руководству выше. Но ничего устанавливать не надо. Фактически нам необходимо далее прокинуть папки **bitrix**, **upload**, **images** из основного сайта в дополнительный. Во всех инструкциях ниже заменить **main.ru** на папку, где лежит основной сайт (ядро Битрикс).
@@ -65,7 +70,7 @@ stub-php-fpm:
       - ./../sites/main.ru/www/upload:/var/main.ru/upload:cached
       - ./../sites/main.ru/www/images:/var/main.ru/images:cached
    ```
-3. Cоздаем симлинки внутри контейнера:
+3. Cоздаем симлинки внутри php-fpm контейнера:
    ```bash
    ln -s /var/main.ru/bitrix/ /var/www/www/bitrix
    ln -s /var/main.ru/upload/ /var/www/www/upload
@@ -76,3 +81,17 @@ stub-php-fpm:
    ln -s ~/Work/bitrix-docker/sites/main.ru/www/ /var/main.ru
    ```
    > В MacOS последняя команда требует sudo.
+
+## Установка обновлений
+
+```bash
+docker-compose pull \
+&& docker-compose up --force-recreate --remove-orphans --build -d \
+&& docker image prune -f
+```
+m
+## Решение проблем
+
+### Не запускается MySQL
+
+Иногда после перезапуска MySQL не хочет перезапускаться. В этом случае необходимо зайти в папку [data/mysql](data/mysql) и удалить файлы mysql.sock и mysql.sock.lock.
