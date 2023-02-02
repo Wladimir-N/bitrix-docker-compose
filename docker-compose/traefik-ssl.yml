@@ -2,7 +2,7 @@ version: '3'
 services:
   traefik:
     image: traefik:latest
-    container_name: webslon-bitrix-traefik
+    container_name: bitrix-traefik
     restart: unless-stopped
     logging:
       driver: loki

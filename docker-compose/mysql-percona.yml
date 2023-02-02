@@ -2,7 +2,7 @@ version: '3'
 services:
   db:
     image: percona
-    container_name: webslon-bitrix-db
+    container_name: bitrix-db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
