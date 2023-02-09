@@ -23,11 +23,12 @@ services:
     image: registry.gitlab.com/bitrix-docker/images/php-fpm-8.1:latest
     container_name: stub-php-fpm
     restart: on-failure
-    #    ports:
-    #      - "9000:9000"
     environment:
+      # to enable xdebug
       PHP_IDE_CONFIG: "serverName=Docker"
       XDEBUG_SESSION: "docker-server"
+      # to skip bitrix server test
+      BITRIX_VA_VER: 7.4.3
     volumes:
       - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
       - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
@@ -37,5 +38,5 @@ services:
       - db
     links:
       - db
-    extra_hosts:
-      - Host(`${MAIN_HOST}`):127.0.0.1
+    external_links:
+      - stub-nginx:Host(`${MAIN_HOST}`)

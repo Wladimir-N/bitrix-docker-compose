@@ -12,8 +12,5 @@
 /data/mysql/*
 !/data/mysql/.gitkeep
 
-# файл traefik-а для ssl-сертификатов
-/conf/traefik/acme.json
-
 # файлы IDE
 .idea/
