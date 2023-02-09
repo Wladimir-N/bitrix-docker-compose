@@ -4,3 +4,6 @@
 [submodule "images/php-fpm-8.1"]
 	path = images/php-fpm-8.1
 	url = git@gitlab.com:bitrix-docker/images/php-fpm-8.1.git
+[submodule "images/sphinx"]
+	path = images/sphinx
+	url = git@gitlab.com:bitrix-docker/images/sphinx.git
