@@ -47,7 +47,7 @@ return array (
   array (
     'value' => 
     array (
-        'crypto_key' => 'kysbwdz8xlpynkrvtren5vs4nz5vns84',
+        'crypto_key' => 'MYSUPERSECRETPHRASE',
     ),
     'readonly' => true,
   ),
@@ -57,11 +57,11 @@ return array (
     array (
       'default' =>
       array (
-        'className' => '\\Bitrix\\Main\\DB\\MysqliConnection',
+        'className' => '\\Bitrix\\Main\\DB\\MysqlConnection',
         'host' => 'localhost',
         'database' => 'sitemanager',
-        'login'    => 'bitrix0',
-        'password' => 'Zvm?}mpm{)U6g0g-ZsRY',
+        'login' => '__LOGIN__',
+        'password' => '__PASSWORD__',
         'options' => 2,
       ),
     ),

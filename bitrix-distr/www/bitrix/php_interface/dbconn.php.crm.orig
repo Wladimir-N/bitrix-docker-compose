@@ -2,8 +2,8 @@
 define("DBPersistent", false);
 $DBType = "mysql";
 $DBHost = "localhost";
-$DBLogin = 'bitrix0';
-$DBPassword = 'Zvm?}mpm{)U6g0g-ZsRY';
+$DBLogin = "__LOGIN__";
+$DBPassword = "__PASSWORD__";
 $DBName = "sitemanager";
 $DBDebug = false;
 $DBDebugToFile = false;
@@ -31,9 +31,8 @@ define("BX_UTF", true);
 define("BX_CRONTAB_SUPPORT", true);
 define("BX_COMPRESSION_DISABLED", true);
 
-define("BX_DISABLE_INDEX_PAGE", true);
+define('BX_SECURITY_SESSION_MEMCACHE_HOST', 'unix:///tmp/memcached.sock');
+define('BX_SECURITY_SESSION_MEMCACHE_PORT', 0);
 
 define("BX_TEMPORARY_FILES_DIRECTORY", "/home/bitrix/.bx_temp/sitemanager/");
-
-define("BX_USE_MYSQLI", true);
 ?>

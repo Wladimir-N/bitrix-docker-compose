@@ -364,7 +364,14 @@ function LoaderGetMessage($name)
 	return $MESS[$name];
 }
 
-$bx_host = 'www.1c-bitrix.ru';
+
+if(LANG == 'ru')
+	$bx_host = 'www.1c-bitrix.ru';
+elseif(LANG == 'de')
+	$bx_host = 'www.bitrix.de';
+else
+	$bx_host = 'www.bitrixsoft.com';
+
 $bx_url = '/download/files/scripts/'.$this_script_name;
 $form = '';
 
@@ -1532,7 +1539,11 @@ function html($ar)
 						<label for="ss"><span class="selected-lang lang <?=LANG?>"></span></label>
 						<div class="select-popup" id="lang-popup">
 							<?
-							foreach(array('en','de','ru') as $l)
+							$langs = array('en','de');
+							if(LANG == 'ru')
+								$langs = array('en','de','ru');
+								
+							foreach($langs as $l)
 							{
 								?>
 								<div class="select-lang-item">
@@ -2077,7 +2088,12 @@ function img($name)
 {
 	if (file_exists($_SERVER['DOCUMENT_ROOT'].'/images/'.$name))
 		return '/images/'.$name;
-	return 'https://www.1c-bitrix.ru/images/bitrix_setup/'.$name;
+
+	if(LANG == 'ru')
+		return 'https://www.1c-bitrix.ru/images/bitrix_setup/'.$name;
+	else
+		return 'https://www.bitrixsoft.com/images/bitrix_setup/'.$name;
+
 }
 
 function ShowError($str)
