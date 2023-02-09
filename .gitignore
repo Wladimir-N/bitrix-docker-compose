@@ -1,16 +1,5 @@
 # файл окружения
 /.env
 
-# логи
-/logs
-
-# файлы сайтов
-/sites/*
-!/sites/.gitkeep
-
-# файлы баз данных
-/data/mysql/*
-!/data/mysql/.gitkeep
-
 # файлы IDE
 .idea/
