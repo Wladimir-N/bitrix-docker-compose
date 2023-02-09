@@ -37,12 +37,12 @@
 Для смены версии php необходимо изменить образ контейнера php-fpm в файле **docker-compose.yml**.
 ```yaml
 stub-php-fpm:
-    image: registry.gitlab.com/bitrix-k8s/images/php-fpm-8.1:latest
+    image: registry.gitlab.com/bitrix-docker/images/php-fpm-8.1:latest
 ```
 
 Доступные на текущий момент образы:
-- registry.gitlab.com/bitrix-k8s/images/php-fpm-7.4:latest
-- registry.gitlab.com/bitrix-k8s/images/php-fpm-8.1:latest
+- registry.gitlab.com/bitrix-docker/images/php-fpm-7.4:latest
+- registry.gitlab.com/bitrix-docker/images/php-fpm-8.1:latest
 
 Также можно собрать и использовать свой образ, например, если нужно добавить какие-то нестандартные компоненты, например, redis.
 
