@@ -31,6 +31,7 @@ services:
       BITRIX_VA_VER: 7.4.3
     volumes:
       - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
+      # Comment or remove next row to disable xdebug (ex. for production)
       - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
       - *www-volume
       - ./../logs/sites/stub/php-fpm:/var/log
