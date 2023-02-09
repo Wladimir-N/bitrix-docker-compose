@@ -16,7 +16,7 @@ services:
       traefik.http.services.stub-nginx.loadbalancer.server.port: 80
     volumes:
       - ./../conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./../logs/stub/nginx:/var/log/nginx
+      - ./../logs/sites/stub/nginx:/var/log/nginx
       - ./../sites/stub:/var/www:cached
 
   stub-php-fpm:
@@ -32,6 +32,7 @@ services:
       - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
       - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
       - ./../sites/stub:/var/www:cached
+      - ./../logs/sites/stub/php-fpm:/var/log
     depends_on:
       - db
     links:
