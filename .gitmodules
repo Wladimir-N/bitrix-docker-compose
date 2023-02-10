@@ -1,9 +1,9 @@
-[submodule "images/php-fpm-7.4"]
+[submodule "php-fpm-7.4"]
 	path = images/php-fpm-7.4
 	url = git@gitlab.com:bitrix-docker/images/php-fpm-7.4.git
-[submodule "images/php-fpm-8.1"]
+[submodule "php-fpm-8.1"]
 	path = images/php-fpm-8.1
 	url = git@gitlab.com:bitrix-docker/images/php-fpm-8.1.git
-[submodule "images/sphinx"]
+[submodule "sphinx"]
 	path = images/sphinx
 	url = git@gitlab.com:bitrix-docker/images/sphinx.git
