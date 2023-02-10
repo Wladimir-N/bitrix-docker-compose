@@ -109,6 +109,36 @@ stub-php-fpm:
 
 ## Настройка Cron
 
+### Выполнение агентов на cron
+
+Для каждого сайта нужно выполнить первые шаги из официальной инструкции (https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=37&LESSON_ID=5507), а именно:
+1. Выполнить команды в php-консоли:
+   ```php
+   COption::SetOptionString("main", "agents_use_crontab", "N");
+   echo COption::GetOptionString("main", "agents_use_crontab", "N");
+   
+   COption::SetOptionString("main", "check_agents", "N");
+   echo COption::GetOptionString("main", "check_agents", "Y");
+   
+   COption::SetOptionString("main", "mail_event_bulk", "20"); 
+   echo COption::GetOptionString("main", "mail_event_bulk", "5");
+   ```
+2. Убираем из файла /bitrix/php_interface/dbconn.php определение следующих констант:
+   ```php
+   define("BX_CRONTAB_SUPPORT", true);
+   define("BX_CRONTAB", true);
+   ```
+   И добавляем:
+   ```php
+   if(!(defined("CHK_EVENT") && CHK_EVENT===true))
+   define("BX_CRONTAB_SUPPORT", true);
+   ```
+
+> Остальное делать не надо - уже реализовано и настраивается автоматически.
+
+### Добавление своих cron-заданий
+
+Делать это обычно не следует, так как в концепции Битрикс правильнее создавать агентов.
 Для настройки cron-заданий сайта необходимо отредактировать файл **/crontabs/root**, расположенный в папке сайта.
 
 ## Настройка Sphinx
