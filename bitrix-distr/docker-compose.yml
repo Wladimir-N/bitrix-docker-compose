@@ -31,6 +31,8 @@ services:
       BITRIX_VA_VER: 7.4.3
     volumes:
       - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
+      # Comment or remove next row to disable mailhog (ex. for production)
+      - ./../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
       # Comment or remove next row to disable xdebug (ex. for production)
       - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
       - *www-volume
@@ -48,6 +50,9 @@ services:
     container_name: stub-cron
     volumes:
       - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
+      # Comment or remove next row to disable mailhog (ex. for production)
+      - ./../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
+      # Comment or remove next row to disable xdebug (ex. for production)
       - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
       - ./../conf/cron/cron_events.php:/var/www/www/bitrix/php_interface/cron_events.php:ro
       - *www-volume

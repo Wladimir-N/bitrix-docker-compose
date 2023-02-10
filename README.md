@@ -13,6 +13,14 @@
    ```bash
    docker-compose up -d
    ```
+4. Для локальной разработки добавить в hosts на локальной машине локальные ресурсы:
+   ```editorconfig
+   # bitrix-docker local
+   127.0.0.1 bitrix.local
+   127.0.0.1 traefik.bitrix.local
+   127.0.0.1 adminer.bitrix.local
+   127.0.0.1 mailhog.bitrix.local
+   ```
 
 ## Добавление нового сайта
 
@@ -116,6 +124,10 @@ stub-php-fpm:
    - Строка подключения для управления индексом (протокол MySql): `sphinx:9306`.
    - Идентификатор индекса: как было задано в п.2.
 7. Выполнить полную переиндексацию модулем поиска (/bitrix/admin/search_reindex.php).
+
+## Настройка почты
+
+Для локального тестирования почтовых сообщений можно использовать mailhog. Доступен по умолчанию по адресу: [mailhog.bitrix.local](http://mailhog.bitrix.local).
 
 ## Многосайтовая конфигурация
 

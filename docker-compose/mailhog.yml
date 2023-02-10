@@ -1,0 +1,13 @@
+version: '3'
+services:
+  mailhog:
+    image: mailhog/mailhog
+    container_name: bitrix-mailhog
+    restart: always
+    logging:
+      driver: 'none'
+    labels:
+      traefik.enable: true
+      traefik.http.routers.mailhog.rule: Host(`mailhog.${MAIN_HOST}`)
+      traefik.http.routers.mailhog.entrypoints: http
+      traefik.http.services.mailhog.loadbalancer.server.port: 8025
