@@ -15,3 +15,5 @@ services:
       traefik.enable: false
     depends_on:
       - db
+    networks:
+      - bitrix

@@ -21,3 +21,5 @@ services:
       traefik.http.middlewares.error-pages-middleware.errors.query: /{status}.html
 
       traefik.http.services.error-pages-service.loadbalancer.server.port: 80
+    networks:
+      - bitrix

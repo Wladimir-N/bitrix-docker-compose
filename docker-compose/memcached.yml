@@ -7,3 +7,5 @@ services:
     command: "-c ${MEMCACHED_CONN_LIMIT} -m ${MEMCACHED_MEMORY_LIMIT} -t ${MEMCACHED_THREADS}"
     labels:
       traefik.enable: false
+    networks:
+      - bitrix

@@ -38,3 +38,5 @@ services:
 
       traefik.http.middlewares.test-auth.basicauth.users: '${TRAEFIK_CREDENTIALS}'
       traefik.http.routers.traefik.middlewares: test-auth
+    networks:
+      - bitrix

@@ -11,3 +11,5 @@ services:
       traefik.http.routers.mysql-adminer.rule: Host(`adminer.${MAIN_HOST}`)
       traefik.http.routers.mysql-adminer.entrypoints: http
       traefik.http.services.mysql-adminer.loadbalancer.server.port: 8080
+    networks:
+      - bitrix

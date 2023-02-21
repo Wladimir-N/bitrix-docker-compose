@@ -11,3 +11,5 @@ services:
       - ./../data/mysql:/var/lib/mysql:cached
     labels:
       traefik.enable: false
+    networks:
+      - bitrix

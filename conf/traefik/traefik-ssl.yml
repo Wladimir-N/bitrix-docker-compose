@@ -33,7 +33,7 @@ http:
 certificatesResolvers:
   letsEncrypt:
     acme:
-      email: dev@web-slon.ru
+      email: ${LETS_ENCRYPT_EMAIL}
       storage: acme.json
       httpChallenge:
         entryPoint: http

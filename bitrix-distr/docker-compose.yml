@@ -1,69 +1,85 @@
-version: "3"
+version: "3.9"
 
 services:
-  stub-nginx:
+  nginx:
     image: nginx:latest
     restart: on-failure
-    container_name: stub-nginx
+    container_name: ${COMPOSE_PROJECT_NAME}-nginx
     links:
-      - stub-php-fpm:php
+      - php-fpm:php
     depends_on:
-      - stub-php-fpm
+      - php-fpm
     labels:
-      traefik.enable: true
-      traefik.http.routers.stub-nginx.rule: Host(`${MAIN_HOST}`)
-      traefik.http.routers.stub-nginx.entrypoints: http
-      traefik.http.services.stub-nginx.loadbalancer.server.port: 80
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${PROJECT_HOST}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=http"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=80"
     volumes:
-      - ./../conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./../logs/sites/stub/nginx:/var/log/nginx
-      - &www-volume ./../sites/stub:/var/www:cached
+      - ./../../conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./../../logs/sites/${PROJECT_DOMAIN}/nginx:/var/log/nginx
+      - &www-volume ./:/var/www:cached
+    networks:
+      - bitrix
 
-  stub-php-fpm:
-    image: registry.gitlab.com/bitrix-docker/images/php-fpm-8.1:latest
-    container_name: stub-php-fpm
+  php-fpm: &fpm-container
+    image: registry.gitlab.com/bitrix-docker/images/php-fpm-${PHP_VERSION}:latest
+    #    build:
+    #      context: ../
+    #      dockerfile: images/php-fpm-${PHP_VERSION}/Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}-php-fpm
     restart: on-failure
     environment:
-      # to enable xdebug
       PHP_IDE_CONFIG: "serverName=Docker"
       XDEBUG_SESSION: "docker-server"
       # to skip bitrix server test
       BITRIX_VA_VER: 7.4.3
+    env_file:
+      - .env
     volumes:
-      - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
+      - ./../../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
       # Comment or remove next row to disable mailhog (ex. for production)
-      - ./../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
+      - ./../../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
       # Uncomment next 2 rows to enable msmtp
-      # - ./../sites/stub/config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
-      # - ./../conf/msmtp/msmtprc:/etc/msmtprc:ro
+      #      - ./config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
+      #      - ./../../conf/msmtp/msmtprc:/etc/msmtprc:ro
       # Comment or remove next row to disable xdebug (ex. for production)
-      - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+      - ./../../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
       - *www-volume
-      - ./../logs/sites/stub/php-fpm:/var/log
-    depends_on:
-      - db
-    links:
-      - db
+      - ./../../logs/sites/${PROJECT_DOMAIN}/php-fpm:/var/log
     external_links:
-      - stub-nginx:Host(`${MAIN_HOST}`)
+      - ${COMPOSE_PROJECT_NAME}-nginx:${PROJECT_HOST}
+    #    extra_hosts:
+    #      - "${PROJECT_HOST}:127.0.0.1"
+    #      - "host.docker.internal:$DOCKER_HOST_IP"
+    networks:
+      - bitrix
 
-  stub-cron:
+  cron:
     <<: *fpm-container
     restart: always
-    container_name: stub-cron
+    container_name: ${COMPOSE_PROJECT_NAME}-cron
+    env_file:
+      - .env
     volumes:
-      - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
+      - ./../../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
       # Comment or remove next row to disable mailhog (ex. for production)
-      - ./../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
+      - ./../../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
       # Uncomment next 2 rows to enable msmtp
-      # - ./../sites/stub/config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
-      # - ./../conf/msmtp/msmtprc:/etc/msmtprc:ro
+      #      - ./config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
+      #      - ./../../conf/msmtp/msmtprc:/etc/msmtprc:ro
       # Comment or remove next row to disable xdebug (ex. for production)
-      - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
-      - ./../conf/cron/cron_events.php:/var/www/www/bitrix/php_interface/cron_events.php:ro
+      - ./../../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+      - ./../../conf/cron/cron_events.php:/var/www/www/bitrix/php_interface/cron_events.php:ro
       - *www-volume
-      - ./../logs/sites/stub/cron:/var/log
-      - ./../sites/stub/crontabs/:/etc/crontabs/
+      - ./../../logs/sites/${PROJECT_DOMAIN}/cron:/var/log
+      - ./crontab/:/etc/crontabs/
     command: "crond -f"
     depends_on:
-      - portal-web-slon-ru-php-fpm
+      - php-fpm
+    networks:
+      - bitrix
+
+networks:
+  bitrix:
+    external: true
+    name: bitrix-common_bitrix

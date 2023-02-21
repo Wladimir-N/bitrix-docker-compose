@@ -11,3 +11,5 @@ services:
       traefik.http.routers.mailhog.rule: Host(`mailhog.${MAIN_HOST}`)
       traefik.http.routers.mailhog.entrypoints: http
       traefik.http.services.mailhog.loadbalancer.server.port: 8025
+    networks:
+      - bitrix

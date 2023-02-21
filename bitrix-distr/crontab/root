@@ -7,5 +7,5 @@
 0       5       1       *       *       run-parts /etc/periodic/monthly
 
 # bitrix
-# * * * * * test -f /var/www/www/bitrix/modules/main/tools/cron_events.php && { php -d sendmail_path="msmtp -t -i -a default" -f /var/www/www/bitrix/modules/main/tools/cron_events.php; } >/dev/null 2>&1
-* * * * * test -f /var/www/www/bitrix/php_interface/cron_events.php && { php -d sendmail_path="msmtp -t -i -a default" -f /var/www/www/bitrix/php_interface/cron_events.php; } >/dev/null 2>&1
+# * * * * * test -f /var/www/www/bitrix/modules/main/tools/cron_events.php && { php -d sendmail_path="msmtp -t -i -a default" -f /var/www/www/bitrix/modules/main/tools/cron_events.php; } > /dev/stdout
+* * * * * test -f /var/www/www/bitrix/php_interface/cron_events.php && { php -f /var/www/www/bitrix/php_interface/cron_events.php; } > /dev/stdout
