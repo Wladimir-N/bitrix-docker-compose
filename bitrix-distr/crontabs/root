@@ -8,4 +8,4 @@
 
 # bitrix
 # * * * * * test -f /var/www/www/bitrix/modules/main/tools/cron_events.php && { php -d sendmail_path="msmtp -t -i -a default" -f /var/www/www/bitrix/modules/main/tools/cron_events.php; } >/dev/null 2>&1
-* * * * * test -f /var/www/www/bitrix/php_interface/cron_events.php && { php -f /var/www/www/bitrix/php_interface/cron_events.php; } >/dev/null 2>&1
+* * * * * test -f /var/www/www/bitrix/php_interface/cron_events.php && { php -d sendmail_path="msmtp -t -i -a default" -f /var/www/www/bitrix/php_interface/cron_events.php; } >/dev/null 2>&1

@@ -33,6 +33,9 @@ services:
       - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
       # Comment or remove next row to disable mailhog (ex. for production)
       - ./../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
+      # Uncomment next 2 rows to enable msmtp
+      # - ./../sites/stub/config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
+      # - ./../conf/msmtp/msmtprc:/etc/msmtprc:ro
       # Comment or remove next row to disable xdebug (ex. for production)
       - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
       - *www-volume
@@ -52,6 +55,9 @@ services:
       - ./../conf/php-fpm/bitrix.ini:/usr/local/etc/php/conf.d/bitrix.ini:ro
       # Comment or remove next row to disable mailhog (ex. for production)
       - ./../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
+      # Uncomment next 2 rows to enable msmtp
+      # - ./../sites/stub/config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
+      # - ./../conf/msmtp/msmtprc:/etc/msmtprc:ro
       # Comment or remove next row to disable xdebug (ex. for production)
       - ./../conf/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
       - ./../conf/cron/cron_events.php:/var/www/www/bitrix/php_interface/cron_events.php:ro

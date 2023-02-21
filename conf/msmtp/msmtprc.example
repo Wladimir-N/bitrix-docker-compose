@@ -1,0 +1,30 @@
+# Set default values for all following accounts.
+defaults
+logfile         /var/log/msmtp_default.log
+auth            on
+keepbcc         off
+tls             on
+tls_certcheck   off
+syslog          on
+
+# Gmail
+account         gmail
+logfile         /var/log/msmtp_gmail.log
+host            smtp.gmail.com
+port            587
+from            <your gmail email>
+user            <your gmail account>
+password        <your gmail password>
+
+# Yandex
+account         yandex
+logfile         /var/log/msmtp_yandex.log
+host            smtp.yandex.ru
+port            25
+from            <your yandex email>
+user            <your yandex account>
+password        <your yandex password>
+
+# Set a default account
+account default : yandex
+aliases        /etc/aliases

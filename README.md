@@ -14,7 +14,7 @@
    docker-compose up -d
    ```
 4. Для локальной разработки добавить в hosts на локальной машине локальные ресурсы:
-   ```editorconfig
+   ```
    # bitrix-docker local
    127.0.0.1 bitrix.local
    127.0.0.1 traefik.bitrix.local
@@ -24,7 +24,7 @@
 
 ## Добавление нового сайта
 
-1. Скопировать папку [bitrix-distr/](bitrix-distr/) в папку [sites/](sites/).
+1. Скопировать папку [bitrix-distr](bitrix-distr) в папку [sites](sites).
 2. Переименовать новую папку в соответствии с продуктивным адресом проекта, например: `test.example.com`. 
 3. В файле **.env** в папке сайта заменить `example.ru` на имя папки нового сайта.
 4. Открываем файл docker-compose.yml в новой папке и:
@@ -157,7 +157,31 @@ stub-php-fpm:
 
 ## Настройка почты
 
+Из коробки можно настроить:
+- mailhog (https://github.com/mailhog/MailHog)
+- msmtp
+
+> Внимание: mailhog и msmtp не могут функционировать одновременно. При одновременном включении работать будет тот вариант, который попадет в настройки sedmail_path в phpinfo.
+
+### Настройка mailhog
 Для локального тестирования почтовых сообщений можно использовать mailhog. Доступен по умолчанию по адресу: [mailhog.bitrix.local](http://mailhog.bitrix.local).
+
+По умолчанию включен. Для отключения mailhog достаточно закомментировать строчку в docker-compose.yml сайта:
+```yaml
+- ./../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
+```
+
+### Настройка msmtp
+
+1. Отключить mailhog.
+2. Раскомментировать строки в docker-compose.yml сайта (два раза, так как они используются в двух сервисах):
+   ```yaml
+   - ./../sites/stub/config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
+   - ./../conf/msmtp/msmtprc:/etc/msmtprc:ro
+   ```
+3. Скопировать файл [conf/msmtp/msmtprc.example](conf/msmtp/msmtprc.example) в conf/msmtp/msmtprc и отредактировать, создав одну или несколько учетных записей.
+4. В папке сайта в файлах **/crontabs/root** и **/config/php-fpm/msmtp.ini** вместо default указать нужную учетную запись msmtp для сайта.
+
 
 ## Многосайтовая конфигурация
 
@@ -169,7 +193,7 @@ stub-php-fpm:
       - ./../sites/main.ru/www/upload:/var/main.ru/upload:cached
       - ./../sites/main.ru/www/images:/var/main.ru/images:cached
    ```
-3. Cоздаем симлинки внутри php-fpm контейнера:
+3. Создаем симлинки внутри php-fpm контейнера:
    ```bash
    ln -s /var/main.ru/bitrix/ /var/www/www/bitrix
    ln -s /var/main.ru/upload/ /var/www/www/upload
