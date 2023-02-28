@@ -202,23 +202,21 @@
 > Внимание: mailhog и msmtp не могут функционировать одновременно. При одновременном включении работать будет тот вариант, который попадет в настройки sedmail_path в phpinfo.
 
 ### Настройка mailhog
-Для локального тестирования почтовых сообщений можно использовать mailhog. Доступен по умолчанию по адресу: [mailhog.bitrix.local](http://mailhog.bitrix.local).
+Для локального тестирования почтовых сообщений можно использовать mailhog. Интерфейс доступен по умолчанию по адресу: [mailhog.bitrix.local](http://mailhog.bitrix.local).
 
-По умолчанию включен. Для отключения mailhog достаточно закомментировать строчку в docker-compose.yml сайта:
-```yaml
-- ./../config/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
-```
+По умолчанию включен. 
+
+Для отключения mailhog переименовать файл в папке сайта /config/php-fpm/mailhog.ini в /config/php-fpm/mailhog.ini.disabled.
+Для включения: вернуть файл / старое название обратно и, если включен msmtp, отключить его.
 
 ### Настройка msmtp
 
 1. Отключить mailhog.
-2. Раскомментировать строки в docker-compose.yml сайта (два раза, так как они используются в двух сервисах):
-   ```yaml
-   - ./../sites/stub/config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
-   - ./../config/msmtp/msmtprc:/etc/msmtprc:ro
-   ```
+2. Переименовать файл в папке сайта /config/php-fpm/msmtp.ini.disabled в /config/php-fpm/msmtp.ini.
 3. Скопировать файл [config/msmtp/msmtprc.example](config/msmtp/msmtprc.example) в **config/msmtp/msmtprc** и отредактировать, создав одну или несколько учетных записей.
 4. В папке сайта в файлах **/crontab/root** и **/config/php-fpm/msmtp.ini** вместо default указать нужную учетную запись msmtp для сайта.
+
+Если нужно отключить msmtp, переименовать обратно /config/php-fpm/msmtp.ini в /config/php-fpm/msmtp.ini.disabled.
 
 ## Многосайтовая конфигурация
 
