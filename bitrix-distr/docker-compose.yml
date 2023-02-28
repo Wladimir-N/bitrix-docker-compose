@@ -33,6 +33,7 @@ services:
       XDEBUG_SESSION: "docker-server"
       # to skip bitrix server test
       BITRIX_VA_VER: 7.4.3
+      TZ: "${TIMEZONE}"
     env_file:
       - .env
     volumes:
