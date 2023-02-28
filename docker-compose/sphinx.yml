@@ -4,6 +4,8 @@ services:
     image: registry.gitlab.com/bitrix-docker/images/sphinx:latest
     container_name: bitrix-sphinx
     restart: always
+    environment:
+      TZ: "${SERVER_TIMEZONE}"
     volumes:
       - ./../config/sphinx:/app/conf
       - ./../data/sphinx/run:/app/run

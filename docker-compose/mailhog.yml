@@ -4,6 +4,8 @@ services:
     image: mailhog/mailhog
     container_name: bitrix-mailhog
     restart: always
+    environment:
+      TZ: "${SERVER_TIMEZONE}"
     logging:
       driver: 'none'
     labels:

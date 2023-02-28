@@ -33,7 +33,7 @@ services:
       XDEBUG_SESSION: "docker-server"
       # to skip bitrix server test
       BITRIX_VA_VER: 7.4.3
-      TZ: "${TIMEZONE}"
+      TZ: "${SERVER_TIMEZONE}"
       PHP_INI_SCAN_DIR: /usr/local/etc/php/conf.d/common/:/usr/local/etc/php/conf.d/:/usr/local/etc/php/conf.d/site/
     env_file:
       - .env

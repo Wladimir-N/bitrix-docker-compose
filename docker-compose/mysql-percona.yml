@@ -6,6 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: "${SERVER_TIMEZONE}"
     volumes:
       - ./../config/mysql/bitrix.cnf:/etc/my.cnf.d/bitrix.cnf:ro
       - ./../data/mysql:/var/lib/mysql:cached

@@ -4,6 +4,8 @@ services:
     image: memcached:alpine
     container_name: bitrix-memcached
     restart: always
+    environment:
+      TZ: "${SERVER_TIMEZONE}"
     command: "-c ${MEMCACHED_CONN_LIMIT} -m ${MEMCACHED_MEMORY_LIMIT} -t ${MEMCACHED_THREADS}"
     labels:
       traefik.enable: false

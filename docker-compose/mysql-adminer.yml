@@ -4,6 +4,8 @@ services:
     image: adminer
     container_name: bitrix-mysql-adminer
     restart: always
+    environment:
+      TZ: "${SERVER_TIMEZONE}"
     depends_on:
       - db
     labels:

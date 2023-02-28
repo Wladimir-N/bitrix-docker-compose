@@ -240,6 +240,24 @@
    ```
    > В MacOS последняя команда требует sudo.
 
+## Часовой пояс
+
+По умолчанию стоит UTC. Если нужно изменить, в .env сайта меняем переменную PHP_TIMEZONE, например:
+```apacheconf
+PHP_TIMEZONE=Europe/Moscow
+```
+
+Добавить в after_connect_d7.php:
+```php
+$connection = Bitrix\Main\Application::getConnection();
+$connection->queryExecute("SET LOCAL time_zone='".date('P')."'");
+```
+
+Добавить в after_connect.php:
+```php
+$DB->Query("SET LOCAL time_zone='".date('P')."'");
+```
+
 ## Установка обновлений
 
 Выполнить в папке сервера (общие сервисы) и аналогично в папке сайта:

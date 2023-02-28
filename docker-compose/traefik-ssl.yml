@@ -4,6 +4,8 @@ services:
     image: traefik:latest
     container_name: bitrix-traefik
     restart: unless-stopped
+    environment:
+      TZ: "${SERVER_TIMEZONE}"
 #    logging:
 #      driver: loki
 #      options:
