@@ -5,7 +5,7 @@ services:
     container_name: bitrix-sphinx
     restart: always
     volumes:
-      - ./../conf/sphinx:/app/conf
+      - ./../config/sphinx:/app/conf
       - ./../data/sphinx/run:/app/run
       - ./../data/sphinx/index:/app/index
       - ./../data/sphinx/dicts:/app/dicts

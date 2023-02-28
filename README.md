@@ -176,7 +176,7 @@
 
 ## Настройка Sphinx
 
-1. Скопировать файл [conf/sphinx/example.conf](conf/sphinx/example.conf) в папку [conf/sphinx/sites](conf/sphinx/sites), имя файла присвоить в соответствии с доменом сайта, с заменой точек на дефисы. Расширение должно быть обязательно **.conf**.
+1. Скопировать файл [config/sphinx/example.conf](config/sphinx/example.conf) в папку [config/sphinx/sites](config/sphinx/sites), имя файла присвоить в соответствии с доменом сайта, с заменой точек на дефисы. Расширение должно быть обязательно **.conf**.
 2. Идентификатор индекса (первая строка) заменить на имя домена без спецсимволов.
 3. Строку **example-ru** в двух местах заменить на имя домена с заменой точек на дефисы.
 4. В папке [data/sphinx/synonyms](data/sphinx/synonyms) создать файл, аналогичный [data/sphinx/synonyms/example.txt](data/sphinx/synonyms/example.txt).
@@ -201,7 +201,7 @@
 
 По умолчанию включен. Для отключения mailhog достаточно закомментировать строчку в docker-compose.yml сайта:
 ```yaml
-- ./../conf/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
+- ./../config/php-fpm/mailhog.ini:/usr/local/etc/php/conf.d/mailhog.ini:ro
 ```
 
 ### Настройка msmtp
@@ -210,9 +210,9 @@
 2. Раскомментировать строки в docker-compose.yml сайта (два раза, так как они используются в двух сервисах):
    ```yaml
    - ./../sites/stub/config/php-fpm/msmtp.ini:/usr/local/etc/php/conf.d/msmtp.ini:ro
-   - ./../conf/msmtp/msmtprc:/etc/msmtprc:ro
+   - ./../config/msmtp/msmtprc:/etc/msmtprc:ro
    ```
-3. Скопировать файл [conf/msmtp/msmtprc.example](conf/msmtp/msmtprc.example) в conf/msmtp/msmtprc и отредактировать, создав одну или несколько учетных записей.
+3. Скопировать файл [config/msmtp/msmtprc.example](config/msmtp/msmtprc.example) в **config/msmtp/msmtprc** и отредактировать, создав одну или несколько учетных записей.
 4. В папке сайта в файлах **/crontab/root** и **/config/php-fpm/msmtp.ini** вместо default указать нужную учетную запись msmtp для сайта.
 
 ## Многосайтовая конфигурация

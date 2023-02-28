@@ -16,14 +16,14 @@ services:
     volumes:
       - ./../data/traefik/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./../conf/traefik/traefik-ssl.yml:/traefik.yml:ro
+      - ./../config/traefik/traefik-ssl.yml:/traefik.yml:ro
     command:
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     labels:
       traefik.enable: true
       traefik.http.routers.traefik.rule: Host(`traefik.${MAIN_HOST}`)
       
-      #traefik.http.routers.traefik.entrypoints: http
+      # traefik.http.routers.traefik.entrypoints: http
       traefik.http.routers.traefik.entrypoints: https
       traefik.http.routers.traefik.tls: true
       traefik.http.routers.traefik.tls.certresolver: letsEncrypt

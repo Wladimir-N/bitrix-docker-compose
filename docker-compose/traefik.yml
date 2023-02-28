@@ -16,7 +16,7 @@ services:
     volumes:
       - ./../data/traefik/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./../conf/traefik/traefik-no-ssl.yml:/traefik.yml:ro
+      - ./../config/traefik/traefik-no-ssl.yml:/traefik.yml:ro
     command:
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     labels:
