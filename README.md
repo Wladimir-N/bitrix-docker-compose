@@ -242,21 +242,30 @@
 
 ## Часовой пояс
 
-По умолчанию стоит UTC. Если нужно изменить, в .env сайта меняем переменную PHP_TIMEZONE, например:
+По умолчанию стоит UTC. Если нужно изменить, в .env сайта меняем переменную PHP_TIMEZONE и SERVER_TIMEZONE, например:
 ```apacheconf
+SERVER_TIMEZONE=Europe/Moscow
 PHP_TIMEZONE=Europe/Moscow
 ```
-
-Добавить в after_connect_d7.php:
-```php
-$connection = Bitrix\Main\Application::getConnection();
-$connection->queryExecute("SET LOCAL time_zone='".date('P')."'");
+А в общем .env сервера указываем:
+```apacheconf
+SERVER_TIMEZONE=Europe/Moscow
 ```
 
-Добавить в after_connect.php:
-```php
-$DB->Query("SET LOCAL time_zone='".date('P')."'");
-```
+Полный перечень доступных значений можно получить по ссылке: https://www.php.net/manual/en/timezones.php.
+
+> Важно! SERVER_TIMEZONE во всех env-файлах должен совпадать.
+
+Если по каким-то причинам требуется указывать PHP_TIMEZONE отличный от SERVER_TIMEZONE (например, разное время на разных сайтах):
+1. Добавить в after_connect_d7.php:
+    ```php
+    $connection = Bitrix\Main\Application::getConnection();
+    $connection->queryExecute("SET LOCAL time_zone='".date('P')."'");
+    ```
+2. Добавить в after_connect.php:
+    ```php
+    $DB->Query("SET LOCAL time_zone='".date('P')."'");
+    ```
 
 ## Установка обновлений
 
