@@ -76,14 +76,35 @@
 1. Скопировать папку [bitrix-distr](bitrix-distr) в папку [sites](sites).
 2. Переименовать новую папку в соответствии с продуктивным адресом проекта, например: `test.example.com`. 
 3. Скопировать в новой папке сайта файл **.env.example** в **.env** и отредактировать в нем настройки сайта.
-4. Для локального проекта редактируем файл hosts на машине, добавляем туда запись с локальным доменом сайта (если не сделали это ранее). На linux-подобных машинах для этого выполняем:
+4. Для локального проекта редактируем файл hosts на машине, добавляем туда запись с локальным доменом сайта (например, test.example.local), если не сделали это ранее. На linux-подобных машинах для этого выполняем:
    ```bash
    sudo nano /etc/hosts
    ```
-5. Перейти в консоли в папку сайта и запустить сервисы:
+5. Добавить запись следующего вида, заменив **test.example.local** на имя своего локального домена:
+   ```
+   # bitrix-docker local
+   127.0.0.1 test.example.local
+   ```
+6. Перейти в консоли в папку сайта и запустить сервисы:
    ```bash
    docker-compose up -d
    ```
+7. Открываем домен (test.example.local в примерах выше) в браузере и устанавливаем сайт через знакомый мастер Битрикс.
+8. На этапе создания БД вписываем имя БД для сайта, имя пользователя root, пароль как указан в основном .env-файле в параметре MYSQL_ROOT_PASSWORD. Для использования другой учетной записи MySQL читаем руководство ниже.
+
+## Пользователь MySQL
+
+По умолчанию используется пользователь root и пароль, указанный в общем .env-файле сервера.
+Для смены учетной записи MySQL для конкретного сайта:
+1. Открываем файлы /bitrix/php_interface/dbconn.php и /bitrix/.settings.php. Берем из них имя базы данных.
+2. Открываем MySQL-консоль в админке Битрикс (/bitrix/admin/sql.php).
+3. Выполняем следующие запросы, заменив username, password и dbname на свои значения логина, пароля и имя базы данных соответственно:
+   ```mysql
+   CREATE USER username IDENTIFIED BY 'password';
+   GRANT ALL PRIVILEGES ON dbname.* TO 'username';
+   FLUSH PRIVILEGES;
+   ```
+4. В файлах /bitrix/php_interface/dbconn.php и /bitrix/.settings.php прописываем новые логин и пароль.
 
 ## Версия php
 
@@ -257,12 +278,12 @@ SERVER_TIMEZONE=Europe/Moscow
 > Важно! SERVER_TIMEZONE во всех env-файлах должен совпадать.
 
 Если по каким-то причинам требуется указывать PHP_TIMEZONE отличный от SERVER_TIMEZONE (например, разное время на разных сайтах):
-1. Добавить в after_connect_d7.php:
+1. Добавить в /bitrix/php_interface/after_connect_d7.php:
     ```php
     $connection = Bitrix\Main\Application::getConnection();
     $connection->queryExecute("SET LOCAL time_zone='".date('P')."'");
     ```
-2. Добавить в after_connect.php:
+2. Добавить в /bitrix/php_interface/after_connect.php:
     ```php
     $DB->Query("SET LOCAL time_zone='".date('P')."'");
     ```
@@ -281,4 +302,4 @@ docker-compose pull \
 
 ### Не запускается MySQL
 
-Иногда после перезапуска MySQL не хочет перезапускаться. В этом случае необходимо зайти в папку [data/mysql](data/mysql) и удалить файлы **mysql.sock** и **mysql.sock.lock**.
+Иногда после некорректного завершения работы MySQL не хочет перезапускаться. В этом случае необходимо зайти в папку [data/mysql](data/mysql) и удалить файлы **mysql.sock** и **mysql.sock.lock**.
