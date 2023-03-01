@@ -214,6 +214,13 @@
    - Идентификатор индекса: как было задано в п.2.
 7. Выполнить полную переиндексацию модулем поиска (/bitrix/admin/search_reindex.php).
 
+## Xdebug
+
+По умолчанию включен.
+
+Для отключения Xdebug нужно переименовать файл в папке сайта /config/php-fpm/xdebug.ini в /config/php-fpm/xdebug.ini.disabled либо удалить его.
+Для включения: вернуть файл / старое название обратно.
+
 ## Настройка почты
 
 Из коробки можно настроить:
@@ -227,7 +234,7 @@
 
 По умолчанию включен. 
 
-Для отключения mailhog переименовать файл в папке сайта /config/php-fpm/mailhog.ini в /config/php-fpm/mailhog.ini.disabled.
+Для отключения mailhog переименовать файл в папке сайта /config/php-fpm/mailhog.ini в /config/php-fpm/mailhog.ini.disabled либо удалить его.
 Для включения: вернуть файл / старое название обратно и, если включен msmtp, отключить его.
 
 ### Настройка msmtp
@@ -237,7 +244,7 @@
 3. Скопировать файл [config/msmtp/msmtprc.example](config/msmtp/msmtprc.example) в **config/msmtp/msmtprc** и отредактировать, создав одну или несколько учетных записей.
 4. В папке сайта в файлах **/crontab/root** и **/config/php-fpm/msmtp.ini** вместо default указать нужную учетную запись msmtp для сайта.
 
-Если нужно отключить msmtp, переименовать обратно /config/php-fpm/msmtp.ini в /config/php-fpm/msmtp.ini.disabled.
+Если нужно отключить msmtp, переименовать обратно /config/php-fpm/msmtp.ini в /config/php-fpm/msmtp.ini.disabled или удалить его.
 
 ## Многосайтовая конфигурация
 
