@@ -15,8 +15,11 @@ services:
 
       traefik.http.routers.error-router.rule: HostRegexp(`{host:.+}`)
       traefik.http.routers.error-router.priority: 1
-      traefik.http.routers.error-router.entrypoints: http
+      traefik.http.routers.error-router.entrypoints: http,https
       traefik.http.routers.error-router.middlewares: error-pages-middleware
+
+      traefik.http.routers.error-router.tls: ${TRAEFIK_TLS_ENABLED}
+      traefik.http.routers.error-router.tls.certresolver: ${TRAEFIK_CERT_RESOLVER}
 
       traefik.http.middlewares.error-pages-middleware.errors.status: 400-599
       traefik.http.middlewares.error-pages-middleware.errors.service: error-pages-service

@@ -1,0 +1,34 @@
+http:
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+        permanent: false
+    # Redirect non-www URLs to their www equivalent
+    # Use with traefik.http.routers.http.middlewares: "redirect-non-www-to-www@file"
+    redirect-to-www:
+      redirectRegex:
+        regex: "^https?://(?:www\\.)?(.+)"
+        replacement: "https://www.${1}"
+        permanent: true
+    # Redirect www URLs to their non-www equivalent
+    # Use with traefik.http.routers.http.middlewares: "redirect-www-to-non-www@file"
+    redirect-to-non-www:
+      redirectRegex:
+        regex: "^https?://www\\.(.+)"
+        replacement: "https://${1}"
+        permanent: true
+    # Redirect non-www URLs to their www equivalent
+    # Use with traefik.http.routers.http.middlewares: "redirect-non-www-to-www@file"
+    redirect-to-www-http:
+      redirectRegex:
+        regex: "^https?://(?:www\\.)?(.+)"
+        replacement: "http://www.${1}"
+        permanent: true
+    # Redirect www URLs to their non-www equivalent
+    # Use with traefik.http.routers.http.middlewares: "redirect-www-to-non-www@file"
+    redirect-to-non-www-http:
+      redirectRegex:
+        regex: "^https?://www\\.(.+)"
+        replacement: "http://${1}"
+        permanent: true
