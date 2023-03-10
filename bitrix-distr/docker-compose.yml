@@ -58,6 +58,7 @@ services:
       - .env
     volumes:
       - ./../../config/php-fpm/:/usr/local/etc/php/conf.d/common/:ro
+      - ./../../config/cron/cron_events.php:/var/www/www/bitrix/php_interface/cron_events.php:ro
       - ./config/php-fpm/:/usr/local/etc/php/conf.d/site/:ro
       - *www-volume
       - ./../../logs/sites/${PROJECT_DOMAIN}/cron:/var/log
