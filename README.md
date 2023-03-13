@@ -53,15 +53,56 @@
    - Интеграция с серверами очередей (RabbitMQ, Kafka).
 - Эксперименты с Kubernetes, развертывание кластеров.
 
+## Установка Docker
+
+### Ubuntu
+
+Официальная документация: https://docs.docker.com/engine/install/ubuntu/
+
+```bash
+sudo apt-get update
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Кроме того, рекомендуется установить:
+```bash
+apt install git nano htop apache2-utils
+```
+
 ## Начало работы
 
-1. Скопировать файл [.env.example](.env.example) в файл [.env](.env) - это будет локальный конфиг. При необходимости скорректировать в нем настройки.
-2. Запустить сервер:
+1. Склонировать репозиторий, например, в папку **/srv/bitrix-server/**:
    ```bash
-   docker-compose up -d
+   mkdir -p /srv/bitrix-server/ && cd /srv/bitrix-server/ && git clone git@gitlab.com:bitrix-docker/server.git .
+   ```
+2. Скопировать файл [.env.example](.env.example) в файл [.env](.env) - это будет локальный конфиг, отредактировать в нем настройки.
+   ```bash
+   cp .env.example .env && nano .env
+   ```
+   В частности:
+   - **MAIN_HOST** - для локальной разработки лучше оставить как есть. Для сервера указать имя основного домена (на поддоменах будут работать общие системные сервисы).
+   - **MYSQL_ROOT_PASSWORD** - для сервера создать сложный пароль
+   - **TRAEFIK_TLS_ENABLED** - если сервер, то лучше поменять на true, чтобы включить ssl, для локальной разработки не меняем
+   - **LETS_ENCRYPT_EMAIL** - указать адрес почты для создания SSL-сертификатов LetsEncrypt
+   - **TRAEFIK_BASIC_AUTH_USERS** - создать пароль для закрытия Traefik (прокси-сервер)
+   - **TRAEFIK_MIDDLEWARES** - для сервера лучше поменять значение на: basic-auth,redirect-to-non-www@file,redirect-to-https@file
+3. Запускаем контейнеры:
+   ```bash
+   docker compose up -d
    ```
    В результате будут запущены общие сервисы, необходимые для работы всей системы.
-3. Для локальной разработки отредактировать файл hosts на локальной машине:
+4. Для локальной разработки отредактировать файл hosts на локальной машине:
    ```bash
    sudo nano /etc/hosts
    ```
@@ -74,7 +115,7 @@
    127.0.0.1 mailhog.bitrix.local
    ```
    А также можно сразу добавить локальные домены сайтов, с которыми предстоит работать.
-4. Добавить хотя бы один сайт (см. ниже раздел руководства).
+5. Добавить хотя бы один сайт (см. ниже раздел руководства).
 
 ## Добавление нового сайта
 
@@ -92,7 +133,7 @@
    ```
 6. Перейти в консоли в папку сайта и запустить сервисы:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 7. Открываем домен (test.example.local в примерах выше) в браузере и устанавливаем сайт через знакомый мастер Битрикс.
 8. На этапе создания БД вписываем имя БД для сайта, имя пользователя root, пароль как указан в основном .env-файле в параметре MYSQL_ROOT_PASSWORD. Для использования другой учетной записи MySQL читаем руководство ниже.
@@ -325,8 +366,8 @@ SERVER_TIMEZONE=Europe/Moscow
 Выполнить в папке сервера (общие сервисы) и аналогично в папке сайта:
 
 ```bash
-docker-compose pull \
-&& docker-compose up --force-recreate --remove-orphans --build -d \
+docker compose pull \
+&& docker compose up --force-recreate --remove-orphans --build -d \
 && docker image prune -f
 ```
 
