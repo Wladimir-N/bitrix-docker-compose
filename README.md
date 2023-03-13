@@ -94,7 +94,7 @@ apt install git nano htop apache2-utils
    - **MAIN_HOST** - для локальной разработки лучше оставить как есть. Для сервера указать имя основного домена (на поддоменах будут работать общие системные сервисы).
    - **MYSQL_ROOT_PASSWORD** - для сервера создать сложный пароль
    - **TRAEFIK_TLS_ENABLED** - если сервер, то лучше поменять на true, чтобы включить ssl, для локальной разработки не меняем
-   - **LETS_ENCRYPT_EMAIL** - указать адрес почты для создания SSL-сертификатов LetsEncrypt
+   - **TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL** - указать адрес почты для создания SSL-сертификатов LetsEncrypt (куда будут приходить уведомления о продлении сертификата)
    - **TRAEFIK_BASIC_AUTH_USERS** - создать пароль для закрытия Traefik (прокси-сервер)
    - **TRAEFIK_MIDDLEWARES** - для сервера лучше поменять значение на: basic-auth,redirect-to-non-www@file,redirect-to-https@file
 3. Запускаем контейнеры:

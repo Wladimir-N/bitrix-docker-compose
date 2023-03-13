@@ -1,7 +1,0 @@
-certificatesResolvers:
-  letsEncrypt:
-    acme:
-      email: ${LETS_ENCRYPT_EMAIL}
-      storage: acme.json
-      httpChallenge:
-        entryPoint: http
