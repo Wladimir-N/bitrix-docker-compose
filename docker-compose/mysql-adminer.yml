@@ -10,7 +10,7 @@ services:
       - db
     labels:
       traefik.enable: true
-      traefik.http.routers.mysql-adminer.rule: Host(`adminer.${MAIN_HOST}`)
+      traefik.http.routers.mysql-adminer.rule: Host(`adminer.${MAIN_HOST}`) || Host(`www.adminer.${MAIN_HOST}`)
       traefik.http.routers.mysql-adminer.entrypoints: http,https
       traefik.http.routers.mysql-adminer.tls: ${TRAEFIK_TLS_ENABLED}
       traefik.http.routers.mysql-adminer.tls.certresolver: ${TRAEFIK_CERT_RESOLVER}
