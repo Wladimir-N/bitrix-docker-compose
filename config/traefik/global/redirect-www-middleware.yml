@@ -3,7 +3,7 @@ http:
     redirect-to-https:
       redirectScheme:
         scheme: https
-        permanent: false
+        permanent: true
     # Redirect non-www URLs to their www equivalent
     # Use with traefik.http.routers.http.middlewares: "redirect-non-www-to-www@file"
     redirect-to-www:
