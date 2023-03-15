@@ -73,12 +73,20 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
 ```
 
 Кроме того, рекомендуется установить:
 ```bash
 apt install git nano htop apache2-utils
 ```
+
+### MacOS
+
+Официальная документация: https://docs.docker.com/desktop/install/mac-install/
+Достаточно скачать соответствующий вашему процессору дистрибутив и запустить установку.
 
 ## Начало работы
 
