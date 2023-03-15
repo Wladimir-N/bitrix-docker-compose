@@ -85,7 +85,8 @@ apt install git nano htop apache2-utils
 
 ### MacOS
 
-Официальная документация: https://docs.docker.com/desktop/install/mac-install/
+Официальная документация: https://docs.docker.com/desktop/install/mac-install/.
+
 Достаточно скачать соответствующий вашему процессору дистрибутив и запустить установку.
 
 ## Начало работы
