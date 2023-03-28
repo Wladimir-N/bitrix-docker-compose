@@ -109,7 +109,7 @@ apt install git nano htop apache2-utils
    - **TRAEFIK_MIDDLEWARES** - для сервера лучше поменять значение на: basic-auth,redirect-to-non-www@file,redirect-to-https@file
 3. Создать файл **data/traefik/letsencrypt/acme.json** (для хранения данных сертификатов LetsEncrypt).
    ```shell
-   echo "{}" > data/traefik/letsencrypt/acme.json
+   echo "{}" > data/traefik/letsencrypt/acme.json && chmod 600 data/traefik/letsencrypt/acme.json
    ```
 4. Запускаем контейнеры:
    ```bash
