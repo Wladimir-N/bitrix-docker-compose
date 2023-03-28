@@ -107,12 +107,16 @@ apt install git nano htop apache2-utils
    - **TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL** - указать адрес почты для создания SSL-сертификатов LetsEncrypt (куда будут приходить уведомления о продлении сертификата)
    - **TRAEFIK_BASIC_AUTH_USERS** - создать пароль для закрытия Traefik (прокси-сервер)
    - **TRAEFIK_MIDDLEWARES** - для сервера лучше поменять значение на: basic-auth,redirect-to-non-www@file,redirect-to-https@file
-3. Запускаем контейнеры:
+3. Создать файл **data/traefik/letsencrypt/acme.json** (для хранения данных сертификатов LetsEncrypt).
+   ```shell
+   echo "{}" > data/traefik/letsencrypt/acme.json
+   ```
+4. Запускаем контейнеры:
    ```bash
    docker compose up -d
    ```
    В результате будут запущены общие сервисы, необходимые для работы всей системы.
-4. Для локальной разработки отредактировать файл hosts на локальной машине:
+5. Для локальной разработки отредактировать файл hosts на локальной машине:
    ```bash
    sudo nano /etc/hosts
    ```
@@ -125,7 +129,7 @@ apt install git nano htop apache2-utils
    127.0.0.1 mailhog.bitrix.local
    ```
    А также можно сразу добавить локальные домены сайтов, с которыми предстоит работать.
-5. Добавить хотя бы один сайт (см. ниже раздел руководства).
+6. Добавить хотя бы один сайт (см. ниже раздел руководства).
 
 ## Добавление нового сайта
 

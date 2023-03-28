@@ -10,7 +10,7 @@ entryPoints:
 certificatesResolvers:
   letsEncrypt:
     acme:
-      storage: acme.json
+      storage: /letsencrypt/acme.json
       httpChallenge:
         entryPoint: http
 

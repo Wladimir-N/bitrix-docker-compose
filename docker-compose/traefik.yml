@@ -17,12 +17,9 @@ services:
       - 443:443
     volumes:
       - ./../data/traefik/letsencrypt:/letsencrypt
-      - ./../data/traefik/letsencrypt/acme.json:/letsencrypt/acme.json
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./../config/traefik/traefik.yml:/traefik.yml:ro
       - ./../config/traefik/global/:/global/:ro
-    command:
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     labels:
       traefik.enable: true
       traefik.http.routers.traefik.rule: Host(`traefik.${MAIN_HOST}`) || Host(`www.traefik.${MAIN_HOST}`)
