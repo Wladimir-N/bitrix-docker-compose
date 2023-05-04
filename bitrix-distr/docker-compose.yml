@@ -10,14 +10,19 @@ services:
     depends_on:
       - php-fpm
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${PROJECT_HOST}`) || Host(`www.${PROJECT_HOST}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=http,https"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls=${PROJECT_TLS_ENABLED}"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=${PROJECT_CERT_RESOLVER}"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=${PROJECT_MIDDLEWARES}"
+      traefik.enable: true
 
-      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=80"
+      traefik.http.routers.${COMPOSE_PROJECT_NAME}-ssl.rule: Host(`${PROJECT_HOST}`) || Host(`www.${PROJECT_HOST}`)
+      traefik.http.routers.${COMPOSE_PROJECT_NAME}-ssl.entrypoints: https
+      traefik.http.routers.${COMPOSE_PROJECT_NAME}-ssl.tls: true
+      traefik.http.routers.${COMPOSE_PROJECT_NAME}-ssl.tls.certresolver: ${PROJECT_CERT_RESOLVER}
+      traefik.http.routers.${COMPOSE_PROJECT_NAME}-ssl.middlewares: ${PROJECT_SSL_MIDDLEWARES}
+
+      traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule: Host(`${PROJECT_HOST}`) || Host(`www.${PROJECT_HOST}`)
+      traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints: http
+      traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares: ${PROJECT_MIDDLEWARES}
+
+      traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port: 80
     volumes:
       - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./../../logs/sites/${PROJECT_DOMAIN}/nginx:/var/log/nginx

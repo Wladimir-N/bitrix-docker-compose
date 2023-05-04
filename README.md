@@ -103,9 +103,9 @@ apt install git nano htop apache2-utils
    - **COMPOSE_FILE** - если какие-то из сервисов не нужны, то их можно отключить, удалив соответствующий конфиг в этом параметре.
    - **MAIN_HOST** - для локальной разработки лучше оставить как есть. Для сервера указать имя основного домена (на поддоменах будут работать общие системные сервисы).
    - **MYSQL_ROOT_PASSWORD** - для сервера создать сложный пароль
-   - **TRAEFIK_TLS_ENABLED** - если сервер, то лучше поменять на true, чтобы включить ssl, для локальной разработки не меняем
    - **TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL** - указать адрес почты для создания SSL-сертификатов LetsEncrypt (куда будут приходить уведомления о продлении сертификата)
    - **TRAEFIK_BASIC_AUTH_USERS** - создать пароль для закрытия Traefik (прокси-сервер)
+   - **TRAEFIK_SSL_MIDDLEWARES** - для сервера лучше поменять значение на: basic-auth,redirect-to-non-www@file
    - **TRAEFIK_MIDDLEWARES** - для сервера лучше поменять значение на: basic-auth,redirect-to-non-www@file,redirect-to-https@file
 3. Создать файл **data/traefik/letsencrypt/acme.json** (для хранения данных сертификатов LetsEncrypt).
    ```shell
@@ -170,25 +170,17 @@ apt install git nano htop apache2-utils
 
 Редактируется в файле *.env* сайта.
 
-## Включение SSL (https) и Настройка редиректов
-
-### Включение SSL для общих сервисов проекта
-
-В файле [.env](.env) установить значение переменной **TRAEFIK_TLS_ENABLED** равным `true`.
-
-### Включение SSL для сайта
-
-В файле **.env** сайта установить значение переменной **PROJECT_TLS_ENABLED** равным `true`.
+## Настройка редиректов
 
 ### Настройка редиректов
 
-Настройка редиректов может быть выполнена через переменную PROJECT_MIDDLEWARES файла **.env** сайта.
+Настройка редиректов может быть выполнена через переменные **PROJECT_SSL_MIDDLEWARES** и **PROJECT_MIDDLEWARES** файла **.env** сайта.
 В системе преднастроены готовые конфигурации редиректов для обычного использования, такие как:
 - http -> https
 - www -> без www
 - без www -> www
 
-Аналогично в файле TRAEFIK_MIDDLEWARES
+Аналогично для общих сервисов (traefik, adminer, mailhog) в общем файле [.env](/.env) проекта настраиваются редиректы в переменных TRAEFIK_SSL_MIDDLEWARES и TRAEFIK_MIDDLEWARES.
 
 ## Memcached
 

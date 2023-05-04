@@ -22,15 +22,21 @@ services:
       - ./../config/traefik/global/:/global/:ro
     labels:
       traefik.enable: true
+
+      traefik.http.routers.traefik-ssl.rule: Host(`traefik.${MAIN_HOST}`) || Host(`www.traefik.${MAIN_HOST}`)
+      traefik.http.routers.traefik-ssl.entrypoints: https
+      traefik.http.routers.traefik-ssl.tls: true
+      traefik.http.routers.traefik-ssl.tls.certresolver: ${TRAEFIK_CERT_RESOLVER}
+      traefik.http.routers.traefik-ssl.middlewares: ${TRAEFIK_SSL_MIDDLEWARES}
+      traefik.http.routers.traefik-ssl.service: api@internal
+
       traefik.http.routers.traefik.rule: Host(`traefik.${MAIN_HOST}`) || Host(`www.traefik.${MAIN_HOST}`)
-      traefik.http.routers.traefik.entrypoints: http,https
-      traefik.http.routers.traefik.tls: ${TRAEFIK_TLS_ENABLED}
-      traefik.http.routers.traefik.tls.certresolver: ${TRAEFIK_CERT_RESOLVER}
+      traefik.http.routers.traefik.entrypoints: http
       traefik.http.routers.traefik.middlewares: ${TRAEFIK_MIDDLEWARES}
+      traefik.http.routers.traefik.service: api@internal
 
       traefik.http.middlewares.basic-auth.basicauth.users: '${TRAEFIK_BASIC_AUTH_USERS}'
 
-      traefik.http.routers.traefik.service: api@internal
       traefik.http.services.traefik.loadbalancer.server.port: 80
     networks:
       - bitrix

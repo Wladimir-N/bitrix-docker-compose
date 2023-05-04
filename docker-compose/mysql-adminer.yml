@@ -10,11 +10,18 @@ services:
       - db
     labels:
       traefik.enable: true
+
+      traefik.http.routers.mysql-adminer-ssl.rule: Host(`adminer.${MAIN_HOST}`) || Host(`www.adminer.${MAIN_HOST}`)
+      traefik.http.routers.mysql-adminer-ssl.entrypoints: https
+      traefik.http.routers.mysql-adminer-ssl.tls: true
+      traefik.http.routers.mysql-adminer-ssl.tls.certresolver: ${TRAEFIK_CERT_RESOLVER}
+      traefik.http.routers.mysql-adminer-ssl.middlewares: ${TRAEFIK_SSL_MIDDLEWARES}
+      traefik.http.routers.mysql-adminer-ssl.service: mysql-adminer
+
       traefik.http.routers.mysql-adminer.rule: Host(`adminer.${MAIN_HOST}`) || Host(`www.adminer.${MAIN_HOST}`)
-      traefik.http.routers.mysql-adminer.entrypoints: http,https
-      traefik.http.routers.mysql-adminer.tls: ${TRAEFIK_TLS_ENABLED}
-      traefik.http.routers.mysql-adminer.tls.certresolver: ${TRAEFIK_CERT_RESOLVER}
+      traefik.http.routers.mysql-adminer.entrypoints: http
       traefik.http.routers.mysql-adminer.middlewares: ${TRAEFIK_MIDDLEWARES}
+      traefik.http.routers.mysql-adminer.service: mysql-adminer
 
       traefik.http.services.mysql-adminer.loadbalancer.server.port: 8080
     networks:
