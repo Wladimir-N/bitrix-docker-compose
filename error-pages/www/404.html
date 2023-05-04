@@ -31,29 +31,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/style.css">
     <title>Страница не найдена / Веб-студия Слон</title>
-    
-    <script>
-	    var timeout = 10;
-	    
-	    function declOfNum(number, titles)  
-		{  
-		    cases = [2, 0, 1, 1, 1, 2];  
-		    return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
-		}
-
-	    checkTimeout = function() {
-		    if (timeout <= 0) {
-			    location.href = 'https://web-slon.ru';
-		    } else {
-				setTimeout(function(){
-					timeout -= 1;
-					document.getElementById('timeout').innerHTML = '' + timeout + ' ' + declOfNum(timeout, ['секунду', 'секунды', 'секунд']);
-					checkTimeout();				    
-				}, 1000);  	    
-		    }	    
-	    }
-	    checkTimeout();
-	</script>
 </head>
 <body class="contact_body">
 
@@ -61,13 +38,9 @@
         <img src="/img/no_page.svg" alt="">
         <p>
             К сожалению, такая страница не найдена. <br>
-            Попробуйте ввести другой адрес или перейти на наш сайт.
+            Попробуйте ввести другой адрес или <a href="https://web-slon.ru/">перейти на наш сайт</a>.
         </p>
         <a class="logo-container" href="https://web-slon.ru/"><img src="/img/slon_logo.svg" alt=""></a>
-        <p>
-            Вы будете автоматически перенаправлены через <span id='timeout'>10 секунд</span><br>
-            или нажмите на <a href="https://web-slon.ru/">эту ссылку</a>.
-        </p>
     </section>
 
 </body>

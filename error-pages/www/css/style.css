@@ -2892,7 +2892,7 @@ body.header_hide {
 /* ===============not_found=============== */
 .not_found {
 	text-align: center;
-	min-height: 100vh;
+	min-height: 100%;
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-bottom: 40px;
