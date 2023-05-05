@@ -382,3 +382,15 @@ docker compose pull \
 ### Не запускается MySQL
 
 Иногда после некорректного завершения работы MySQL не хочет перезапускаться. В этом случае необходимо зайти в папку [data/mysql](data/mysql) и удалить файлы **mysql.sock** и **mysql.sock.lock**.
+
+### Старый сайт с mbstring.func_overload = 2
+
+Если нужно для определенного сайта прописать настройки mbstring (например, старая установка Битрикс), нужно создать в папке **config/php-fpm** сайта файл, например, mbstring.ini со следующим содержимым:
+
+```editorconfig
+[mbstring]
+mbstring.internal_encoding = UTF-8
+mbstring.func_overload = 2
+```
+
+Аналогичным образом можно добавлять любые другие настройки php для сайта.
