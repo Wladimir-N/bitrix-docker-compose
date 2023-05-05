@@ -58,10 +58,10 @@ return array (
       'default' =>
       array (
         'className' => '\\Bitrix\\Main\\DB\\MysqliConnection',
-        'host' => 'localhost',
-        'database' => 'sitemanager',
-        'login'    => 'bitrix0',
-        'password' => 'Zvm?}mpm{)U6g0g-ZsRY',
+        'host' => 'db',
+        'database' => '',
+        'login'    => 'root',
+        'password' => 'test',
         'options' => 2,
       ),
     ),

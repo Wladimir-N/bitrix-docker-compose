@@ -1,10 +1,10 @@
 <?
 define("DBPersistent", false);
 $DBType = "mysql";
-$DBHost = "localhost";
-$DBLogin = 'bitrix0';
-$DBPassword = 'Zvm?}mpm{)U6g0g-ZsRY';
-$DBName = "sitemanager";
+$DBHost = "db";
+$DBLogin = 'root';
+$DBPassword = 'test';
+$DBName = "";
 $DBDebug = false;
 $DBDebugToFile = false;
 
