@@ -1,0 +1,3 @@
+[mbstring]
+mbstring.internal_encoding = UTF-8
+mbstring.func_overload = 2
