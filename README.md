@@ -423,3 +423,23 @@ docker compose exec php-fpm sh
 # внутри контейнера установить права на папку /var/www
 chown -R www-data:www-data /var/www
 ```
+
+### Ошибка при работе Rest API: Https required
+
+Полный ответ сервиса в случае данной проблемы выглядит так:
+```json
+{
+    "error": "INVALID_REQUEST",
+    "error_description": "Https required."
+}
+```
+
+Для решения проблемы необходимо добавить определение константы REST_APAUTH_ALLOW_HTTP в **dbconn.php**:
+```php
+# bitrix/php_interface/dbconn.php
+define('REST_APAUTH_ALLOW_HTTP', true);
+```
+
+> Данное решение не понижает безопасность (если настроен https по инструкции ниже).
+> Дело в том, что внутри контейнеров нет смысла поднимать https, так как это занимает дополнительное время на каждый запрос.
+> Поэтому прокси-сервер "общается" с контейнером php-fpm по 80 порту.
