@@ -328,23 +328,44 @@ apt install git nano htop apache2-utils
 
 ## Многосайтовая конфигурация
 
-1. Настраиваем сайт аналогично руководству выше. Но ничего устанавливать не надо. Фактически нам необходимо далее прокинуть папки **bitrix**, **upload**, **images** из основного сайта в дополнительный. Во всех инструкциях ниже заменить **main.ru** на папку, где лежит основной сайт (ядро Битрикс).
-2. Добавляем в секцию `volumes` подобное:
-   ```yaml
-   volumes:
-      - ./../sites/main.ru/www/bitrix:/var/main.ru/bitrix:cached
-      - ./../sites/main.ru/www/upload:/var/main.ru/upload:cached
-      - ./../sites/main.ru/www/images:/var/main.ru/images:cached
-   ```
+1. Создаем и настраиваем конфиги сайта аналогично руководству выше. Но ничего устанавливать не надо. Фактически нам необходимо далее прокинуть папки **bitrix**, **upload**, **images** из основного сайта в дополнительный. Во всех инструкциях ниже заменить **main.ru** на папку, где лежит основной сайт (ядро Битрикс).
+2. Редактируем файл **docker-compose.yml** сайта (не основного, где расположено ядро). 
+   1. Добавляем в секции `volumes` подобное:
+      ```yaml
+      # services -> nginx
+      services:
+        nginx:
+          # .....
+          volumes:
+            # .....
+            - &bitrix-volume ./../main.ru/www/bitrix:/var/main.ru/bitrix:cached
+            - &upload-volume ./../main.ru/www/upload:/var/main.ru/upload:cached
+            - &images-volume ./../main.ru/www/images:/var/main.ru/images:cached
+        
+        php-fpm:
+          # .....
+          volumes:
+            # .....
+            - *bitrix-volume
+            - *upload-volume
+            - *images-volume
+      ```
+   2. Секцию **cron** вообще удаляем или комментируем, иначе cron-задания будут запускаться дважды.
 3. Создаем симлинки внутри php-fpm контейнера:
    ```bash
-   ln -s /var/main.ru/bitrix/ /var/www/www/bitrix
-   ln -s /var/main.ru/upload/ /var/www/www/upload
-   ln -s /var/main.ru/images/ /var/www/www/images
+   # зайти в контейнер
+   docker compose exec php-fpm sh
+   ```
+   ```bash
+   # внутри контейнера создать симлинки
+   ln -s /var/main.ru/bitrix/ /var/www/www/bitrix \
+   && ln -s /var/main.ru/upload/ /var/www/www/upload \
+   && ln -s /var/main.ru/images/ /var/www/www/images
    ```
 4. Чтобы папки подключились и на хост-машине (обычно это нужно для разработки, чтобы IDE видела файлы ядра), можно аналогично создать симлинк:
    ```bash
-   ln -s ~/Work/bitrix-docker/sites/main.ru/www/ /var/main.ru
+   # /srv/bitrix-server - папка с установленным сервером из этого проекта:
+   ln -s /srv/bitrix-server/sites/main.ru/www /var/main.ru
    ```
    > В MacOS последняя команда требует sudo.
 
