@@ -197,6 +197,7 @@ apt install git nano htop apache2-utils
 1. В папке сайта в файле **dbconn.php** добавить объявление констант:
    ```php
    # sites/домен.сайта/php_interface/dbconn.php
+   
    define("BX_CACHE_TYPE", "memcache");
    define("BX_CACHE_SID", $_SERVER["DOCUMENT_ROOT"]."#01");
    define("BX_MEMCACHE_HOST", "memcached");
@@ -472,6 +473,7 @@ chown -R www-data:www-data /var/log
 Для решения проблемы необходимо добавить определение константы REST_APAUTH_ALLOW_HTTP в **dbconn.php**:
 ```php
 # sites/домен.сайта/bitrix/php_interface/dbconn.php
+
 define('REST_APAUTH_ALLOW_HTTP', true);
 ```
 
@@ -487,6 +489,7 @@ define('REST_APAUTH_ALLOW_HTTP', true);
 Нужно раскомментировать 2 строки, extra_hosts и следующая за ней:
 ```yaml
 # sites/домен.сайта/docker-compose.yml
+
 services:
   php-fpm:
     # .....
@@ -499,5 +502,6 @@ services:
 При неуспешном прохождении данного теста при настроенном https необходимо в **dbconn.php** добавить:
 ```php
 # sites/домен.сайта/bitrix/php_interface/dbconn.php
+
 $_SERVER['HTTPS'] = 'on';
 ```
