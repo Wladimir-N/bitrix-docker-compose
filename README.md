@@ -194,17 +194,19 @@ apt install git nano htop apache2-utils
 
 Для настройки Memcached необходимо для каждого сайта выполнить следующие шаги:
 
-1. В папке сайта в файле **/bitrix/php_interface/dbconn.php** добавить объявление констант:
+1. В папке сайта в файле **dbconn.php** добавить объявление констант:
    ```php
+   # sites/домен.сайта/php_interface/dbconn.php
    define("BX_CACHE_TYPE", "memcache");
    define("BX_CACHE_SID", $_SERVER["DOCUMENT_ROOT"]."#01");
    define("BX_MEMCACHE_HOST", "memcached");
    define("BX_MEMCACHE_PORT", "11211");
    ```
-2. В файле **/bitrix/.settings_extra.php** (если его нет, то создать):
+2. В файле **.settings_extra.php** (если его нет, то создать):
    ```php
    <?php
-   # /bitrix/.settings_extra.php
+   # sites/домен.сайта/bitrix/.settings_extra.php
+   
    return array(
     'cache' => array(
       'value' => array(
@@ -219,7 +221,7 @@ apt install git nano htop apache2-utils
    );
    ?>
    ```
-   Либо в **/bitrix/.settings.php** можно создать / отредактировать узел `cache`.
+   Либо в файле **.settings.php** можно создать / отредактировать узел `cache`.
 
 > Если используется многосайтовость, то нужно указывать статичный sid, без `$_SERVER["DOCUMENT_ROOT"]`. Иначе для двух сайтов кеш будет отличаться, так-как папки сайтов разные.
 
@@ -261,13 +263,17 @@ apt install git nano htop apache2-utils
    COption::SetOptionString("main", "mail_event_bulk", "20"); 
    echo COption::GetOptionString("main", "mail_event_bulk", "5");
    ```
-2. Убираем из файла /bitrix/php_interface/dbconn.php определение следующих констант:
+2. Убираем из файла **dbconn.php** определение следующих констант:
    ```php
+   # sites/домен.сайта/bitrix/php_interface/dbconn.php
+   
    define("BX_CRONTAB_SUPPORT", true);
    define("BX_CRONTAB", true);
    ```
    И добавляем:
    ```php
+   # sites/домен.сайта/bitrix/php_interface/dbconn.php
+   
    if(!(defined("CHK_EVENT") && CHK_EVENT===true))
    define("BX_CRONTAB_SUPPORT", true);
    ```
@@ -332,6 +338,8 @@ apt install git nano htop apache2-utils
 2. Редактируем файл **docker-compose.yml** сайта (не основного, где расположено ядро). 
    1. Добавляем в секции `volumes` подобное:
       ```yaml
+      # sites/домен.сайта/docker-compose.yml
+      
       services:
         nginx:
           # .....
@@ -442,6 +450,13 @@ mbstring.func_overload = 2
 docker compose exec php-fpm sh
 # внутри контейнера установить права на папку /var/www
 chown -R www-data:www-data /var/www
+chown -R www-data:www-data /var/log
+
+# зайти в контейнер cron
+docker compose exec cron sh
+# внутри контейнера установить права на папку /var/www
+chown -R www-data:www-data /var/www
+chown -R www-data:www-data /var/log
 ```
 
 ### Ошибка при работе Rest API: Https required
@@ -456,22 +471,33 @@ chown -R www-data:www-data /var/www
 
 Для решения проблемы необходимо добавить определение константы REST_APAUTH_ALLOW_HTTP в **dbconn.php**:
 ```php
-# bitrix/php_interface/dbconn.php
+# sites/домен.сайта/bitrix/php_interface/dbconn.php
 define('REST_APAUTH_ALLOW_HTTP', true);
 ```
 
-> Данное решение не понижает безопасность (если настроен https по инструкции ниже).
+> Данное решение не понижает безопасность (если настроен https по инструкции выше).
 > Дело в том, что внутри контейнеров нет смысла поднимать https, так как это занимает дополнительное время на каждый запрос.
 > Поэтому прокси-сервер "общается" с контейнером php-fpm по 80 порту.
 
-### Ошибка работы с сокетами при прохождении теста Битрикс проверки системы на сервере с SSL
+### Прохождение тестов Битрикс
+
+#### Ошибка работы с сокетами при прохождении теста Битрикс проверки системы на сервере с SSL
 
 Редактируем файл **docker-compose.yml** сайта.
 Нужно раскомментировать 2 строки, extra_hosts и следующая за ней:
 ```yaml
+# sites/домен.сайта/docker-compose.yml
 services:
   php-fpm:
     # .....
     extra_hosts:
     - "${PROJECT_HOST}:127.0.0.1" # вместо 127.0.0.1 укажите внешний IP-адрес вашего сервера
+```
+
+#### Не проходит тест "Внутреннее перенаправление (функция LocalRedirect)"
+
+При неуспешном прохождении данного теста при настроенном https необходимо в **dbconn.php** добавить:
+```php
+# sites/домен.сайта/bitrix/php_interface/dbconn.php
+$_SERVER['HTTPS'] = 'on';
 ```
