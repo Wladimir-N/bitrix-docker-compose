@@ -219,11 +219,11 @@ elseif (LANG == "de")
 	$MESS["NO_PERMS"] = "Nicht genunugend Rechte um die Datei zu beschreiben";
 	$MESS["LOADER_LICENSE_KEY"] = "Lizenzschlussel";
 	$MESS["INTRANET"] = "Intranet Portal ";
-	$MESS["LOADER_TITLE"] = "Download der \"Bitrix\" Software";
+	$MESS["LOADER_TITLE"] = "Download der \"Bitrix24\" Software";
 	$MESS["UPDATE_SUCCESS"] = "Aktualisierung erfolgreich durchgefuhrt. <a href='?'>Offnen?</a>.";
-	$MESS["LOADER_NEW_STEPS"] = "Download der \"Bitrix\" Software";
+	$MESS["LOADER_NEW_STEPS"] = "Download der \"Bitrix24\" Software";
 	$MESS["LOADER_SUBTITLE1"] = "Softwaredownload";
-	$MESS["LOADER_SUBTITLE2"] = "Bitrix ";
+	$MESS["LOADER_SUBTITLE2"] = "Bitrix24";
 	$MESS["LOADER_MENU_LIST"] = "Auswahl des Installationspacks";
 	$MESS["LOADER_MENU_LOAD"] = "Download des Installationspacks von dem Server";
 	$MESS["LOADER_MENU_UNPACK"] = "Auspacken des Installationspacks";
@@ -251,15 +251,15 @@ color=\"#FF0000\"><b>Achtung!</b></font> PHP hat nicht genugend Rechte um das Ha
 	$MESS["LOADER_NEW_STEPS180"] = "max. 180 Sekunden";
 	$MESS["LOADER_NEW_STEPS240"] = "max. 240 Sekunden";
 	$MESS["LOADER_NEW_LOAD"] = "Hochladen";
-	$MESS["LOADER_DESCR"] = "Dieses Skript ist dient dem Download der \"Bitrix\"-Installationspacks von der Website <a
-href=\"https://www.bitrix.de/download/index.php\" target=\"_blank\">www.bitrix.de</a> direkt auf Ihre Website, sowie dem Auspacken des Installationspacks auf Ihrer Website.<br><br> 
+	$MESS["LOADER_DESCR"] = "Dieses Skript ist dient dem Download der \"Bitrix24\"-Installationspacks von der Website <a
+href=\"https://www.bitrix24.de/prices/self-hosted.php\" target=\"_blank\">www.bitrix24.de</a> direkt auf Ihre Website, sowie dem Auspacken des Installationspacks auf Ihrer Website.<br><br> 
 Laden Sie dieses Skript in das Hauptverzeichnis, und offnen Sie es in Ihrem Internet-Browser. Geben Sie dafur in der Adresszeile <nobr>https://&amp;lt;IhreWebsite&amp;gt;/".$this_script_name."</nobr>).";
 	$MESS["LOADER_BACK_2LIST"] = "Zur der Installationspack-Liste zuruckkehren";
-	$MESS["LOADER_BACK"] = "Zuruck";
+	$MESS["LOADER_BACK"] = "Zurück";
 	$MESS["LOADER_LOG_ERRORS"] = "Folgende Fehler sind aufgetreten:";
 	$MESS["LOADER_NO_LOG"] = "Log-Datei nicht gefunden";
 	$MESS["LOADER_BOTTOM_NOTE1"] = "<b><font color=\"#FF0000\">Achtung!</font></b> Nach der Installation des Produkts loschen Sie <b>unbedingt</b> das Skript<nobr>/".$this_script_name."</nobr> von Ihrer Website. Der Fremdzugriff zu diesem Skript kann fehlerhafte Funktion Ihrer Website mit sich fuhren.";
-	$MESS["LOADER_KB"] = "кб";
+	$MESS["LOADER_KB"] = "kb";
 	$MESS["LOADER_LOAD_QUERY_SERVER"] = "Anfrage an den Server...";
 	$MESS["LOADER_LOAD_QUERY_DISTR"] = "Anfrage fur das Installationspack #DISTR#";
 	$MESS["LOADER_LOAD_CONN2HOST"] = "Aufbau der Verbindung mit #HOST#...";
@@ -292,10 +292,10 @@ else
 	$MESS["NO_PERMS"] = "No permissions to write the file ";
 	$MESS["LOADER_LICENSE_KEY"] = "Your license key";
 	$MESS["INTRANET"] = "Bitrix Intranet Portal";
-	$MESS["LOADER_TITLE"] = "Loading Product \"Bitrix Site Manager\" or \"Bitrix Intranet Portal\"";
+	$MESS["LOADER_TITLE"] = "Loading Product \"Bitrix24\"";
 	$MESS["UPDATE_SUCCESS"] = "Successful update. <a href='?'>Open</a>.";
 	$MESS["LOADER_SUBTITLE1"] = "Loading";
-	$MESS["LOADER_SUBTITLE2"] = "Bitrix Site Manager or Bitrix Intranet Portal";
+	$MESS["LOADER_SUBTITLE2"] = "Bitrix24";
 	$MESS["LOADER_MENU_LIST"] = "Choose a package";
 	$MESS["LOADER_MENU_LOAD"] = "Download installation package from server";
 	$MESS["LOADER_MENU_UNPACK"] = "Unpacking the Installation Package";
@@ -1510,7 +1510,7 @@ function html($ar)
 	</style>
 	<div class="wrap <?=LANG?>">
 		<header class="header">
-			<?if ($isCrm):?>
+			<?if ($isCrm || LANG != 'ru'):?>
 				<a href="" target="_blank" class="logo-link"><span class="logo <?=LANG?>"></span></a>
 			<?else:?>
 				<a href="" target="_blank" class="buslogo-link"><span class="buslogo <?=LANG?>"></span></a>
